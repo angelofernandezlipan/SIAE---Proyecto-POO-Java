@@ -10,10 +10,10 @@ public class Main {
         SistemaInscripcion sistema = new SistemaInscripcion();
         Sesion sesion = new Sesion();
 
-        // Se inicializa la interfaz de consola, pasándole las instancias necesarias.
+        // Inicializa la interfaz de consola, pasándole las instancias necesarias.
         MenuConsola menu = new MenuConsola(sistema, sesion);
 
-        // Se ejecuta el bucle principal de la aplicación.
+        // Bucle principal.
         menu.mostrarMenuPrincipal();
     }
 }
