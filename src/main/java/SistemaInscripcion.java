@@ -20,6 +20,7 @@ public class SistemaInscripcion {
         cargarDatosDesdeJSON();
     }
 
+    // Cargar datos desde el archivo JSON
     public void cargarDatosDesdeJSON() {
         JsonObject datos = UtilidadesJSON.leerJSON(FILE_PATH);
         if (datos != null) {
@@ -57,6 +58,7 @@ public class SistemaInscripcion {
         }
     }
 
+    // Guardar datos en el archivo JSON
     public void guardarDatosEnJSON() {
         JsonObject datos = new JsonObject();
         datos.add("estudiantes", UtilidadesJSON.listToJsonArray(estudiantes));
@@ -64,6 +66,7 @@ public class SistemaInscripcion {
         UtilidadesJSON.escribirJSON(FILE_PATH, datos);
     }
 
+    // Validar credenciales de un estudiante
     public Estudiante validarCredenciales(String rut, String password) {
         String rutNormalizado = rut.replace(".", "").replace("-", "");
         for (Estudiante est : estudiantes) {
@@ -72,9 +75,10 @@ public class SistemaInscripcion {
                 return est;
             }
         }
-        return null;
+        return null; // Retorna null si no encuentra el estudiante
     }
 
+    // Mostrar asignaturas disponibles
     public void mostrarAsignaturasDisponibles() {
         System.out.println("\n--- Asignaturas Disponibles ---");
         asignaturas.stream()
@@ -82,12 +86,14 @@ public class SistemaInscripcion {
                 .forEach(asig -> System.out.println(asig.toString()));
     }
 
+    // Realizar inscripción de una asignatura
     public String inscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
         Asignatura asignatura = buscarAsignaturaPorCodigo(codigoAsignatura);
         if (asignatura == null) {
             return "Error: Asignatura no encontrada.";
         }
 
+        // Validación de reglas
         if (estudiante.getAsignaturasInscritas().size() >= 3) {
             return "Error: Ya tienes 3 asignaturas inscritas.";
         }
@@ -107,12 +113,14 @@ public class SistemaInscripcion {
             return "Error: Ya tienes 2 asignaturas inscritas en la sección " + asignatura.getSeccion();
         }
 
+        // Si todas las validaciones son exitosas, se realiza la inscripción
         estudiante.agregarAsignaturaInscrita(codigoAsignatura);
         asignatura.setCuposDisponibles(asignatura.getCuposDisponibles() - 1);
         guardarDatosEnJSON(); // Guardar cambios inmediatamente
         return "¡Inscripción exitosa en " + asignatura.getNombre() + "!";
     }
 
+    // Buscar una asignatura por su código
     public Asignatura buscarAsignaturaPorCodigo(String codigo) {
         return asignaturas.stream()
                 .filter(asig -> asig.getCodigo().equals(codigo))
@@ -120,6 +128,7 @@ public class SistemaInscripcion {
                 .orElse(null);
     }
 
+    // Generar un reporte de inscripciones
     public void generarReporteInscripciones() {
         System.out.println("\n--- Reporte de Inscripciones ---");
         System.out.println("Total de estudiantes: " + estudiantes.size());
