@@ -11,6 +11,7 @@ public class MenuConsola {
         this.scanner = new Scanner(System.in);
     }
 
+    // Méthod para mostrar el menú principal
     public void mostrarMenuPrincipal() {
         while (true) {
             System.out.println("\n--- Sistema de Inscripción de Asignaturas Electivas (SIAE) ---");

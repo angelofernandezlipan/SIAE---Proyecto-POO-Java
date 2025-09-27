@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Se inicializan las clases principales del sistema.
+        // Clases principales.
         SistemaInscripcion sistema = new SistemaInscripcion();
         Sesion sesion = new Sesion();
 
-        // Inicializa la interfaz de consola, pasándole las instancias necesarias.
+        // Interfaz de consola.
         MenuConsola menu = new MenuConsola(sistema, sesion);
 
         // Bucle principal.

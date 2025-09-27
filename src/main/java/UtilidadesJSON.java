@@ -24,7 +24,7 @@ public class UtilidadesJSON {
         }
     }
 
-    // Méthod para escribir un JsonObject en un archivo JSON
+    // Method para escribir un JsonObject en un archivo JSON
     public static void escribirJSON(String filePath, JsonObject data) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {

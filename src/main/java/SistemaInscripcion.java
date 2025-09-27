@@ -20,7 +20,7 @@ public class SistemaInscripcion {
         cargarDatosDesdeJSON();
     }
 
-    // Cargar datos desde el archivo JSON
+    // Carga datos desde el archivo JSON
     public void cargarDatosDesdeJSON() {
         JsonObject datos = UtilidadesJSON.leerJSON(FILE_PATH);
         if (datos != null) {
@@ -58,7 +58,7 @@ public class SistemaInscripcion {
         }
     }
 
-    // Guardar datos en el archivo JSON
+    // Guarda datos en el archivo JSON
     public void guardarDatosEnJSON() {
         JsonObject datos = new JsonObject();
         datos.add("estudiantes", UtilidadesJSON.listToJsonArray(estudiantes));
@@ -66,7 +66,7 @@ public class SistemaInscripcion {
         UtilidadesJSON.escribirJSON(FILE_PATH, datos);
     }
 
-    // Validar credenciales de un estudiante
+    // Valida credenciales de un estudiante
     public Estudiante validarCredenciales(String rut, String password) {
         String rutNormalizado = rut.replace(".", "").replace("-", "");
         for (Estudiante est : estudiantes) {
@@ -86,7 +86,7 @@ public class SistemaInscripcion {
                 .forEach(asig -> System.out.println(asig.toString()));
     }
 
-    // Realizar inscripción de una asignatura
+    // Inscripción de una asignatura
     public String inscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
         Asignatura asignatura = buscarAsignaturaPorCodigo(codigoAsignatura);
         if (asignatura == null) {

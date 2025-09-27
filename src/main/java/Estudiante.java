@@ -33,7 +33,7 @@ public class Estudiante {
         return asignaturasInscritas;
     }
 
-    // Método para añadir una asignatura a la lista de inscritas
+    // Méthod para añadir una asignatura a la lista de inscritas
     public void agregarAsignaturaInscrita(String codigoAsignatura) {
         this.asignaturasInscritas.add(codigoAsignatura);
     }
