@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UtilidadesJSON {
 
-    // Méthod para leer datos de un archivo JSON y devolver un objeto JsonObject
+    // Método existente para leer JSON
     public static JsonObject leerJSON(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
@@ -24,7 +24,7 @@ public class UtilidadesJSON {
         }
     }
 
-    // Method para escribir un JsonObject en un archivo JSON
+    // Método existente para escribir un JsonObject
     public static void escribirJSON(String filePath, JsonObject data) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {
@@ -35,14 +35,22 @@ public class UtilidadesJSON {
         }
     }
 
-    // Méthod genérico para convertir un JsonArray a una lista de objetos
+    // MÉTODO CLAVE para sobrescribir el archivo con una cadena JSON (usado para resetear datos)
+    public static void escribirJSONPlano(String filePath, String jsonContent) {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.write(jsonContent);
+        } catch (IOException e) {
+            System.err.println("Error al resetear el archivo JSON: " + e.getMessage());
+        }
+    }
+
+    // Métodos existentes (sin cambios)
     public static <T> List<T> jsonArrayToList(JsonArray jsonArray, Class<T> clazz) {
         Gson gson = new Gson();
         Type listType = TypeToken.getParameterized(ArrayList.class, clazz).getType();
         return gson.fromJson(jsonArray, listType);
     }
 
-    // Méthod genérico para convertir una lista de objetos a un JsonArray
     public static <T> JsonArray listToJsonArray(List<T> list) {
         Gson gson = new Gson();
         return (JsonArray) gson.toJsonTree(list);
