@@ -1,17 +1,20 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuConsola {
     private final SistemaInscripcion sistema;
     private final Sesion sesion;
+    private final GestionAdministrativa gestionAdmin; // 1. NUEVA INSTANCIA DE GESTIÓN ADMINISTRATIVA
     private final Scanner scanner;
 
     public MenuConsola(SistemaInscripcion sistema, Sesion sesion) {
         this.sistema = sistema;
         this.sesion = sesion;
+        this.gestionAdmin = new GestionAdministrativa(sistema); // 2. INICIALIZACIÓN
         this.scanner = new Scanner(System.in);
     }
 
-    // Méthod para mostrar el menú principal
+    // Método para mostrar el menú principal (sin cambios)
     public void mostrarMenuPrincipal() {
         while (true) {
             System.out.println("\n--- Sistema de Inscripción de Asignaturas Electivas (SIAE) ---");
@@ -37,7 +40,7 @@ public class MenuConsola {
         }
     }
 
-    // Lógica para el inicio de sesión del estudiante
+    // Lógica para el inicio de sesión del estudiante (sin cambios)
     private void loginEstudiante() {
         System.out.print("Ingrese su RUT (sin puntos ni guión): ");
         String rut = scanner.nextLine();
@@ -54,7 +57,7 @@ public class MenuConsola {
         }
     }
 
-    // Menú para estudiantes
+    // Menú para estudiantes (sin cambios)
     private void menuEstudiante() {
         while (true) {
             System.out.println("\n--- Menú de Estudiante ---");
@@ -95,7 +98,7 @@ public class MenuConsola {
         }
     }
 
-    // Lógica para inscribir una asignatura
+    // Lógica para inscribir una asignatura (sin cambios)
     private void inscribirAsignatura(Estudiante estudiante) {
         if (estudiante.getAsignaturasInscritas().size() >= 3) {
             System.out.println("No puedes inscribir más de 3 asignaturas.");
@@ -110,7 +113,7 @@ public class MenuConsola {
         System.out.println(resultado);
     }
 
-    // Lógica para el inicio de sesión del administrador
+    // Lógica para el inicio de sesión del administrador (sin cambios)
     private void loginAdministrador() {
         System.out.print("Ingrese el nombre de usuario de administrador: ");
         String user = scanner.nextLine();
@@ -125,20 +128,68 @@ public class MenuConsola {
         }
     }
 
-    // Menú para administradores
+    // Menú para administradores (AHORA LLAMA A LAS NUEVAS FUNCIONES)
     private void menuAdministrador() {
         while (true) {
             System.out.println("\n--- Menú de Administrador ---");
-            System.out.println("1. Generar reporte de inscripciones");
-            System.out.println("2. Cerrar sesión");
+            System.out.println("1. Carga Masiva de Estudiantes (TXT)");
+            System.out.println("2. Exportar Reportes");
+            System.out.println("3. Cerrar sesión");
             System.out.print("Seleccione una opción: ");
             String opcion = scanner.nextLine();
+
             switch (opcion) {
                 case "1":
-                    sistema.generarReporteInscripciones();
+                    cargarMasivaEstudiantes(); // Nuevo método auxiliar
                     break;
                 case "2":
+                    menuExportarReportes(); // Nuevo submenú
+                    break;
+                case "3":
                     System.out.println("Sesión de administrador cerrada.");
+                    return;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        }
+    }
+
+    // Nuevo: Lógica para la carga masiva
+    private void cargarMasivaEstudiantes() {
+        System.out.println("\n--- Carga Masiva de Estudiantes ---");
+        System.out.println("Asegure que el archivo TXT/CSV contenga líneas con: RUT, Nombre, Curso (ej: 3A, 4B)");
+        System.out.print("Ingrese la ruta/nombre del archivo a cargar (ej: alumnos.txt): ");
+        String filePath = scanner.nextLine();
+
+        List<String> mensajes = gestionAdmin.cargarListaCursos(filePath); // DELEGADO A GESTIONADMIN
+
+        System.out.println("\n--- Resultado de la Carga ---");
+        mensajes.forEach(System.out::println);
+        if (mensajes.get(0).startsWith("Carga masiva exitosa")) {
+            System.out.println("Recuerde revisar el archivo 'reporte_credenciales_admin.txt' creado en la raíz.");
+        }
+    }
+
+    // Nuevo: Submenú para exportación de reportes
+    private void menuExportarReportes() {
+        while (true) {
+            System.out.println("\n--- Exportar Reportes ---");
+            System.out.println("1. Reporte de Cupos por Asignatura (TXT)");
+            System.out.println("2. Reporte de Inscripciones por Estudiante y Curso (TXT)");
+            System.out.println("3. Volver al Menú Admin");
+            System.out.print("Seleccione un reporte para exportar: ");
+            String opcion = scanner.nextLine();
+
+            switch (opcion) {
+                case "1":
+                    gestionAdmin.exportarReportes(1); // DELEGADO A GESTIONADMIN
+                    System.out.println("Reporte de cupos exportado a 'reporte_cupos_asignaturas.txt'");
+                    break;
+                case "2":
+                    gestionAdmin.exportarReportes(2); // DELEGADO A GESTIONADMIN
+                    System.out.println("Reporte de inscripciones exportado a 'reporte_inscripciones_estudiantes.txt'");
+                    break;
+                case "3":
                     return;
                 default:
                     System.out.println("Opción inválida.");

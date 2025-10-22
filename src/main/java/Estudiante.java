@@ -6,17 +6,24 @@ public class Estudiante {
     private String rut;
     private String nombre;
     private String password;
+    private String curso; // Nuevo atributo
     private List<String> asignaturasInscritas;
 
     // Constructor de la clase
-    public Estudiante(String rut, String nombre, String password, List<String> asignaturasInscritas) {
+    public Estudiante(String rut, String nombre, String password, String curso, List<String> asignaturasInscritas) {
         this.rut = rut;
         this.nombre = nombre;
         this.password = password;
+        this.curso = curso; // Asignación del nuevo atributo
         this.asignaturasInscritas = asignaturasInscritas != null ? asignaturasInscritas : new ArrayList<>();
     }
 
-    // Getters
+    // Constructor auxiliar para la carga masiva (sin lista de inscritas al inicio)
+    public Estudiante(String rut, String nombre, String password, String curso) {
+        this(rut, nombre, password, curso, null);
+    }
+
+    // Getters y Setters
     public String getRut() {
         return rut;
     }
@@ -29,11 +36,15 @@ public class Estudiante {
         return password;
     }
 
+    public String getCurso() {
+        return curso;
+    }
+
     public List<String> getAsignaturasInscritas() {
         return asignaturasInscritas;
     }
 
-    // Méthod para añadir una asignatura a la lista de inscritas
+    // Método para añadir una asignatura a la lista de inscritas
     public void agregarAsignaturaInscrita(String codigoAsignatura) {
         this.asignaturasInscritas.add(codigoAsignatura);
     }
@@ -43,6 +54,7 @@ public class Estudiante {
         return "Estudiante{" +
                 "rut='" + rut + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", curso='" + curso + '\'' +
                 ", asignaturasInscritas=" + asignaturasInscritas +
                 '}';
     }
