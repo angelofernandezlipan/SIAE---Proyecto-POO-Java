@@ -1,8 +1,10 @@
+package modelo;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Estudiante {
-    // Atributos de la clase Estudiante
+    // Atributos de la clase modelo.Estudiante
     private String rut;
     private String nombre;
     private String password;
@@ -51,7 +53,7 @@ public class Estudiante {
 
     @Override
     public String toString() {
-        return "Estudiante{" +
+        return "modelo.Estudiante{" +
                 "rut='" + rut + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", curso='" + curso + '\'' +

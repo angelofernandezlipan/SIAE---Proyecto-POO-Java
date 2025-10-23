@@ -1,3 +1,5 @@
+package modelo;
+
 public class Sesion {
     private Estudiante estudianteActual;
 

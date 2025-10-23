@@ -1,8 +1,10 @@
+package modelo;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Asignatura {
-    // Atributos de la clase Asignatura
+    // Atributos de la clase modelo.Asignatura
     private String codigo;
     private String nombre;
     private String seccion;

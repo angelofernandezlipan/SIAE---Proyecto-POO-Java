@@ -1,13 +1,10 @@
+package modelo;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class SistemaInscripcion {
     private List<Estudiante> estudiantes;
@@ -32,7 +29,7 @@ public class SistemaInscripcion {
         this.estudiantes.add(estudiante);
     }
 
-    // Getters Públicos para GestionAdministrativa
+    // Getters Públicos para modelo.GestionAdministrativa
     public List<Estudiante> getEstudiantes() {
         return estudiantes;
     }
@@ -104,7 +101,7 @@ public class SistemaInscripcion {
     public String inscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
         Asignatura asignatura = buscarAsignaturaPorCodigo(codigoAsignatura);
         if (asignatura == null) {
-            return "Error: Asignatura no encontrada.";
+            return "Error: modelo.Asignatura no encontrada.";
         }
 
         // Validación de reglas
@@ -142,9 +139,9 @@ public class SistemaInscripcion {
                 .orElse(null);
     }
 
-    // Generar un reporte de inscripciones (Función ahora delegada a GestionAdministrativa)
+    // Generar un reporte de inscripciones (Función ahora delegada a modelo.GestionAdministrativa)
     public void generarReporteInscripciones() {
         System.out.println("\n--- Reporte de Inscripciones ---");
-        System.out.println("Esta función ahora utiliza GestionAdministrativa para exportar un archivo TXT.");
+        System.out.println("Esta función ahora utiliza modelo.GestionAdministrativa para exportar un archivo TXT.");
     }
 }

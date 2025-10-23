@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/target/classes/Asignatura.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Asignatura.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Estudiante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Estudiante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MenuConsola.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/MenuConsola.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Sesion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Sesion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SistemaInscripcion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SistemaInscripcion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/UtilidadesJSON.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/UtilidadesJSON.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/datos.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/datos.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PruebasUnitarias.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PruebasUnitarias.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Asignatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GestionAdministrativa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/GestionAdministrativa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/launcher/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MenuConsola.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MenuConsola.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Sesion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Sesion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SistemaInscripcion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UtilidadesArchivo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vista/UtilidadesArchivo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UtilidadesJSON.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PruebasUnitarias.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PruebasUnitarias.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "angelofernandezlipan"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/angelofernandezlipan/SIAE---Proyecto-POO-Java.git",
+    "accountId": "54a76954-0616-4e18-afbd-3b8ae4a38cdb"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -37,7 +51,7 @@
     "Application.Main.executor": "Run",
     "JUnit.PruebasUnitarias.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "rama-victoria",
+    "git-widget-placeholder": "rama-angelo",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/victoria/IdeaProjects/SIAE beta"
   }

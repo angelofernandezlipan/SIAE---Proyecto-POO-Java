@@ -1,3 +1,7 @@
+package vista;
+
+import modelo.*;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,11 +18,11 @@ public class MenuConsola {
         this.scanner = new Scanner(System.in);
     }
 
-    // Método para mostrar el menú principal (sin cambios)
+    // Méthod para mostrar el menú principal (sin cambios)
     public void mostrarMenuPrincipal() {
         while (true) {
             System.out.println("\n--- Sistema de Inscripción de Asignaturas Electivas (SIAE) ---");
-            System.out.println("1. Iniciar sesión como Estudiante");
+            System.out.println("1. Iniciar sesión como modelo.Estudiante");
             System.out.println("2. Iniciar sesión como Administrador");
             System.out.println("3. Salir");
             System.out.print("Seleccione una opción: ");
@@ -60,7 +64,7 @@ public class MenuConsola {
     // Menú para estudiantes (sin cambios)
     private void menuEstudiante() {
         while (true) {
-            System.out.println("\n--- Menú de Estudiante ---");
+            System.out.println("\n--- Menú de modelo.Estudiante ---");
             System.out.println("1. Ver asignaturas disponibles");
             System.out.println("2. Inscribir una asignatura");
             System.out.println("3. Ver mis asignaturas inscritas");
@@ -140,7 +144,7 @@ public class MenuConsola {
 
             switch (opcion) {
                 case "1":
-                    cargarMasivaEstudiantes(); // Nuevo método auxiliar
+                    cargarMasivaEstudiantes(); // Nuevo méthod auxiliar
                     break;
                 case "2":
                     menuExportarReportes(); // Nuevo submenú
@@ -174,8 +178,8 @@ public class MenuConsola {
     private void menuExportarReportes() {
         while (true) {
             System.out.println("\n--- Exportar Reportes ---");
-            System.out.println("1. Reporte de Cupos por Asignatura (TXT)");
-            System.out.println("2. Reporte de Inscripciones por Estudiante y Curso (TXT)");
+            System.out.println("1. Reporte de Cupos por modelo.Asignatura (TXT)");
+            System.out.println("2. Reporte de Inscripciones por modelo.Estudiante y Curso (TXT)");
             System.out.println("3. Volver al Menú Admin");
             System.out.print("Seleccione un reporte para exportar: ");
             String opcion = scanner.nextLine();

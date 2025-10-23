@@ -1,3 +1,5 @@
+package modelo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -5,7 +7,7 @@ import java.util.Random;
 public class GestionAdministrativa {
     private final SistemaInscripcion sistema;
 
-    // La ruta del archivo la manejará SistemaInscripcion para consistencia
+    // La ruta del archivo la manejará modelo.SistemaInscripcion para consistencia
     private static final String FILE_PATH = "src/main/resources/datos.json";
 
     public GestionAdministrativa(SistemaInscripcion sistema) {
@@ -22,7 +24,7 @@ public class GestionAdministrativa {
     // Se espera el formato: RUT, Nombre, Curso (ej: 3A, 4B)
     public List<String> cargarListaCursos(String filePath) {
         List<String> errores = new ArrayList<>();
-        // Asumimos que UtilidadesArchivo ya existe y funciona correctamente
+        // Asumimos que util.UtilidadesArchivo ya existe y funciona correctamente
         List<String> lineas = UtilidadesArchivo.leerArchivo(filePath);
         List<String> listaExportar = new ArrayList<>();
 
@@ -46,12 +48,12 @@ public class GestionAdministrativa {
 
                     // Si el estudiante ya existe, lo omitimos (buscamos solo por RUT usando "N/A" como contraseña)
                     if (sistema.validarCredenciales(rut, "N/A") != null) {
-                        errores.add("Advertencia: Estudiante con RUT " + rut + " ya existe y fue omitido.");
+                        errores.add("Advertencia: modelo.Estudiante con RUT " + rut + " ya existe y fue omitido.");
                         continue;
                     }
 
-                    // Constructor de Estudiante: (rut, nombre, password, curso, asignaturasInscritas)
-                    // Necesita la versión de Estudiante que incluye el atributo 'curso'
+                    // Constructor de modelo.Estudiante: (rut, nombre, password, curso, asignaturasInscritas)
+                    // Necesita la versión de modelo.Estudiante que incluye el atributo 'curso'
                     Estudiante nuevoEst = new Estudiante(rut, nombre, password, curso, new ArrayList<>());
                     sistema.agregarEstudiante(nuevoEst);
                     listaExportar.add(String.format("%s\t%s\t%s\t%s", rut, nombre, curso, password));
@@ -88,7 +90,7 @@ public class GestionAdministrativa {
                 );
                 break;
 
-            case 2: // Reporte de Inscripciones por Estudiante y Curso
+            case 2: // Reporte de Inscripciones por modelo.Estudiante y Curso
                 filename = "reporte_inscripciones_estudiantes.txt";
                 reporte.add("RUT\tNOMBRE\tCURSO\tASIGNATURAS INSCRITAS");
                 sistema.getEstudiantes().forEach(est -> {

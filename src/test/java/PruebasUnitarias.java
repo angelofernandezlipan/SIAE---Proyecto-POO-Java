@@ -1,11 +1,15 @@
+import modelo.Asignatura;
+import modelo.Estudiante;
+import modelo.SistemaInscripcion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.UtilidadesJSON;
 
 public class PruebasUnitarias {
     private SistemaInscripcion sistema;
 
-    // La ruta debe coincidir con la que usa SistemaInscripcion
+    // La ruta debe coincidir con la que usa modelo.SistemaInscripcion
     private static final String FILE_PATH = "src/main/resources/datos.json";
 
     // Datos JSON limpios para resetear el archivo antes de cada prueba
@@ -116,7 +120,7 @@ public class PruebasUnitarias {
         Assertions.assertNotNull(estudiante);
 
         // Modificamos el objeto en memoria para la prueba
-        // Se asume que Asignatura y buscarAsignaturaPorCodigo son visibles
+        // Se asume que modelo.Asignatura y buscarAsignaturaPorCodigo son visibles
         // El problema de aislamiento se resuelve con setUp
         Asignatura asig = sistema.buscarAsignaturaPorCodigo("CIE303");
         // Forzamos 0 cupos
