@@ -4,15 +4,18 @@
       "rut": "12.345.678-9",
       "nombre": "nn1",
       "password": "pass",
+      "curso": "4A",
       "asignaturasInscritas": [
-        "HUM505",
-        "ART101"
+        "ART101",
+        "HUM202",
+        "CIE303"
       ]
     },
     {
       "rut": "98.765.432-1",
       "nombre": "nn2",
       "password": "pass",
+      "curso": "4B",
       "asignaturasInscritas": []
     }
   ],
@@ -22,56 +25,42 @@
       "nombre": "Historia del Arte",
       "seccion": "ARTISTICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 44,
-      "estudiantesInscritos": []
+      "cuposDisponibles": 44
     },
     {
       "codigo": "HUM202",
       "nombre": "Filosofia y Etica",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45,
-      "estudiantesInscritos": []
+      "cuposDisponibles": 44
     },
     {
       "codigo": "CIE303",
       "nombre": "Biologia Avanzada",
       "seccion": "MATEMATICO_CIENTIFICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45,
-      "estudiantesInscritos": []
+      "cuposDisponibles": 44
     },
     {
       "codigo": "ART404",
       "nombre": "Dibujo y Pintura",
       "seccion": "ARTISTICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45,
-      "estudiantesInscritos": []
+      "cuposDisponibles": 45
     },
     {
       "codigo": "HUM505",
       "nombre": "Literatura Universal",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 44,
-      "estudiantesInscritos": []
-    },
-    {
-      "codigo": "CIE606",
-      "nombre": "Fisica Moderna",
-      "seccion": "MATEMATICO_CIENTIFICO",
-      "cuposMaximos": 45,
-      "cuposDisponibles": 45,
-      "estudiantesInscritos": []
+      "cuposDisponibles": 45
     },
     {
       "codigo": "HUM707",
       "nombre": "Historia de Chile",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45,
-      "estudiantesInscritos": []
+      "cuposDisponibles": 45
     }
   ]
 }
