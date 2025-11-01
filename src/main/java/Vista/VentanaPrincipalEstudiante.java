@@ -1,3 +1,5 @@
+package Vista;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,7 +34,7 @@ public class VentanaPrincipalEstudiante {
 
         // Acción para el botón Inscribir
         botonInscribir.addActionListener(e -> {
-            // Abre la OTRA ventana (VentanaInscripcion)
+            // Abre la OTRA ventana (Vista.VentanaInscripcion)
             // y le pasa los datos del sistema y del estudiante
             VentanaInscripcion vInscripcion = new VentanaInscripcion(this.sistema, this.estudianteLogueado);
 

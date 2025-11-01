@@ -1,3 +1,5 @@
+package Vista;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -67,8 +69,8 @@ public class VentanaLogin {
                 login.dispose();
 
                 // Abrimos la ventana principal, pasando el estudiante validado
-                // (Asumiendo que VentanaPrincipalEstudiante acepta el estudiante)
-                // VentanaPrincipalEstudiante ventanaMenu = new VentanaPrincipalEstudiante(this.sistema, estudianteValidado);
+                // (Asumiendo que Vista.VentanaPrincipalEstudiante acepta el estudiante)
+                // Vista.VentanaPrincipalEstudiante ventanaMenu = new Vista.VentanaPrincipalEstudiante(this.sistema, estudianteValidado);
 
             } else {
                 mensaje.setText("Usuario (RUT) o contraseña incorrectos");
