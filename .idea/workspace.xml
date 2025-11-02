@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/target/classes/Asignatura.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Asignatura.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Estudiante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Estudiante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/MenuConsola.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/MenuConsola.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Sesion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Sesion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SistemaInscripcion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SistemaInscripcion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/UtilidadesJSON.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/UtilidadesJSON.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/datos.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/datos.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/PruebasUnitarias.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PruebasUnitarias.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="33Eff3jGiLbp7XIcvWYUMFoC1S5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.PruebasUnitarias.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "rama-victoria",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/victoria/IdeaProjects/SIAE beta"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="PruebasUnitarias" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="siae-project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="PruebasUnitarias" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PruebasUnitarias" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="" />
+      <created>1758887276704</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758887276704</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -1,3 +1,5 @@
+package util;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -14,17 +16,18 @@ import java.util.List;
 
 public class UtilidadesJSON {
 
-    // Método existente para leer JSON
+    // Método para leer JSON
     public static JsonObject leerJSON(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
         } catch (IOException e) {
-            System.err.println("Error al leer el archivo JSON: " + e.getMessage());
+            // El error es esperado si el archivo no existe, no es crítico.
+            // System.err.println("Advertencia al leer el archivo JSON (posiblemente inexistente): " + e.getMessage());
             return null;
         }
     }
 
-    // Método existente para escribir un JsonObject
+    // Método para escribir un JsonObject
     public static void escribirJSON(String filePath, JsonObject data) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {
@@ -35,22 +38,14 @@ public class UtilidadesJSON {
         }
     }
 
-    // MÉTODO CLAVE para sobrescribir el archivo con una cadena JSON (usado para resetear datos)
-    public static void escribirJSONPlano(String filePath, String jsonContent) {
-        try (FileWriter writer = new FileWriter(filePath)) {
-            writer.write(jsonContent);
-        } catch (IOException e) {
-            System.err.println("Error al resetear el archivo JSON: " + e.getMessage());
-        }
-    }
-
-    // Métodos existentes (sin cambios)
+    // Convierte JsonArray a List<T>
     public static <T> List<T> jsonArrayToList(JsonArray jsonArray, Class<T> clazz) {
         Gson gson = new Gson();
         Type listType = TypeToken.getParameterized(ArrayList.class, clazz).getType();
         return gson.fromJson(jsonArray, listType);
     }
 
+    // Convierte List<T> a JsonArray
     public static <T> JsonArray listToJsonArray(List<T> list) {
         Gson gson = new Gson();
         return (JsonArray) gson.toJsonTree(list);

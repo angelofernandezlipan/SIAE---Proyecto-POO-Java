@@ -1,0 +1,67 @@
+{
+  "estudiantes": [
+    {
+      "rut": "12.345.678-9",
+      "nombre": "nn1",
+      "password": "pass",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "98.765.432-1",
+      "nombre": "nn2",
+      "password": "pass",
+      "asignaturasInscritas": []
+    }
+  ],
+  "asignaturas": [
+    {
+      "codigo": "ART101",
+      "nombre": "Historia del Arte",
+      "seccion": "ARTISTICO",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    },
+    {
+      "codigo": "HUM202",
+      "nombre": "Filosofia y Etica",
+      "seccion": "HUMANISTA",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    },
+    {
+      "codigo": "CIE303",
+      "nombre": "Biologia Avanzada",
+      "seccion": "MATEMATICO_CIENTIFICO",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    },
+    {
+      "codigo": "ART404",
+      "nombre": "Dibujo y Pintura",
+      "seccion": "ARTISTICO",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    },
+    {
+      "codigo": "HUM505",
+      "nombre": "Literatura Universal",
+      "seccion": "HUMANISTA",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    },
+    {
+      "codigo": "CIE606",
+      "nombre": "Fisica Moderna",
+      "seccion": "MATEMATICO_CIENTIFICO",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    },
+    {
+      "codigo": "HUM707",
+      "nombre": "Historia de Chile",
+      "seccion": "HUMANISTA",
+      "cuposMaximos": 45,
+      "cuposDisponibles": 45
+    }
+  ]
+}
