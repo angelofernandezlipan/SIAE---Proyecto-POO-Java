@@ -18,49 +18,68 @@ public class SistemaInscripcion {
         cargarDatosIniciales();
     }
 
-    // --- Métodos de Gestión Interna (se mantienen) ---
+    // --- Métodos de Gestión Interna ---
     private void cargarDatosIniciales() {
-        JsonObject datos = repositorio.cargarDatos();
-        // ... (lógica de carga) ...
-        JsonArray asignaturasArray = datos.getAsJsonArray("asignaturas");
-        if (asignaturasArray != null) {
-            this.asignaturas = UtilidadesJSON.jsonArrayToList(asignaturasArray, Asignatura.class);
-        } else {
-            this.asignaturas = new ArrayList<>();
-        }
-        JsonArray estudiantesArray = datos.getAsJsonArray("estudiantes");
+        // Carga de Estudiantes (Volátil)
+        JsonObject datosEstudiantes = repositorio.cargarEstudiantes();
+        JsonArray estudiantesArray = datosEstudiantes.getAsJsonArray("estudiantes");
         if (estudiantesArray != null) {
             this.estudiantes = UtilidadesJSON.jsonArrayToList(estudiantesArray, Estudiante.class);
         } else {
             this.estudiantes = new ArrayList<>();
         }
+
+        // Carga de Asignaturas (Estática)
+        JsonObject datosAsignaturas = repositorio.cargarAsignaturas();
+        JsonArray asignaturasArray = datosAsignaturas.getAsJsonArray("asignaturas");
+
+        if (asignaturasArray != null && asignaturasArray.size() > 0) {
+            this.asignaturas = UtilidadesJSON.jsonArrayToList(asignaturasArray, Asignatura.class);
+            System.out.println("SistemaInscripcion: Asignaturas cargadas desde archivo estático.");
+        } else {
+            // Inicialización Defensiva: Crea la lista si no existe y la guarda en el archivo estático.
+            System.out.println("SistemaInscripcion: Creando y guardando asignaturas por defecto en el archivo estático.");
+            this.asignaturas = crearAsignaturasIniciales();
+            repositorio.guardarAsignaturas(this.asignaturas);
+        }
+
         System.out.println("SistemaInscripcion inicializado. Estudiantes: " + estudiantes.size() + ", Asignaturas: " + asignaturas.size());
     }
 
-    public void guardarDatos() {
-        repositorio.guardarDatos(estudiantes, asignaturas);
+    private List<Asignatura> crearAsignaturasIniciales() {
+        List<Asignatura> lista = new ArrayList<>();
+        lista.add(new Asignatura("ART101", "Historia del Arte", "ARTISTICO", 45, 45));
+        lista.add(new Asignatura("HUM202", "Filosofia y Etica", "HUMANISTA", 45, 45));
+        lista.add(new Asignatura("CIE303", "Biologia Avanzada", "CIENTIFICO", 45, 45));
+        lista.add(new Asignatura("HUM505", "Literatura Universal", "HUMANISTA", 45, 45));
+        lista.add(new Asignatura("CIE606", "Fisica Moderna", "CIENTIFICO", 45, 45));
+        lista.add(new Asignatura("ART404", "Dibujo y Pintura", "ARTISTICO", 45, 45));
+        lista.add(new Asignatura("HUM707", "Historia de Chile", "HUMANISTA", 45, 45));
+        return lista;
     }
 
-    // --- Lógica de Estudiante (Validación CORREGIDA) ---
+    public void guardarDatos() {
+        repositorio.guardarEstudiantes(estudiantes);
+        repositorio.guardarAsignaturas(asignaturas);
+    }
+
+    // --- Lógica de Estudiante ---
 
     public Estudiante validarCredenciales(String rut, String password) {
         // Normalización del RUT ingresado
         String rutNormalizado = rut.replace(".", "").replace("-", "").trim();
-
         // Normalización de la contraseña ingresada
         String passwordNormalizada = password.trim();
 
         return estudiantes.stream()
                 .filter(est -> {
-                    // Normalización del RUT guardado
+                    // FILTRO 1: ¿Coincide el RUT? (Sanitiza el RUT guardado)
                     String estRutNormalizado = est.getRut().replace(".", "").replace("-", "").trim();
                     return estRutNormalizado.equals(rutNormalizado);
                 })
                 .filter(est -> {
-                    // Normalización de la contraseña guardada
+                    // FILTRO 2: ¿Coincide la contraseña? (Sanitiza la contraseña guardada)
                     String passwordGuardada = est.getPassword().trim();
-
-                    // Compara la contraseña normalizada
                     return passwordNormalizada.equals("N/A") || passwordGuardada.equals(passwordNormalizada);
                 })
                 .findFirst()
@@ -72,20 +91,21 @@ public class SistemaInscripcion {
         this.estudiantes.add(estudiante);
     }
 
-    // --- Resto de Métodos (se mantienen) ---
-    public List<Estudiante> getEstudiantes() { return estudiantes; }
-    public List<Asignatura> getAsignaturas() { return asignaturas; }
+    // --- Lógica de Asignatura ---
+
     public Asignatura buscarAsignaturaPorCodigo(String codigo) {
         return asignaturas.stream()
                 .filter(asig -> asig.getCodigo().equals(codigo))
                 .findFirst()
                 .orElse(null);
     }
+
     public List<Asignatura> obtenerAsignaturasDisponibles() {
         return asignaturas.stream()
                 .filter(asig -> asig.getCuposDisponibles() > 0)
                 .collect(Collectors.toList());
     }
+
     public String inscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
         Asignatura asignatura = buscarAsignaturaPorCodigo(codigoAsignatura);
         if (asignatura == null) { return "Error: Asignatura no encontrada."; }
@@ -102,11 +122,7 @@ public class SistemaInscripcion {
         guardarDatos();
         return "¡Inscripción exitosa en " + asignatura.getNombre() + "!";
     }
-    public void limpiarDatosSistema() {
-        repositorio.limpiarDatos();
-        this.estudiantes = new ArrayList<>();
-        this.asignaturas = new ArrayList<>();
-    }
+
     public String desinscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
         Asignatura asignatura = this.buscarAsignaturaPorCodigo(codigoAsignatura);
         if (asignatura == null) { return "Error: La asignatura no se encuentra en el sistema."; }
@@ -116,4 +132,18 @@ public class SistemaInscripcion {
         this.guardarDatos();
         return "¡Desinscripción exitosa de " + asignatura.getNombre() + "!";
     }
+
+    public void limpiarDatosSistema() {
+        repositorio.limpiarEstudiantes();
+        this.estudiantes = new ArrayList<>();
+        // Se mantiene el estado de las asignaturas
+        this.asignaturas = repositorio.cargarAsignaturas().getAsJsonArray("asignaturas") != null ?
+                UtilidadesJSON.jsonArrayToList(repositorio.cargarAsignaturas().getAsJsonArray("asignaturas"), Asignatura.class) :
+                new ArrayList<>();
+        System.out.println("Datos volátiles de estudiantes y de sesión limpiados.");
+    }
+
+    // Estos métodos DEBEN ser PUBLIC y estaban bien implementados
+    public List<Estudiante> getEstudiantes() { return estudiantes; }
+    public List<Asignatura> getAsignaturas() { return asignaturas; }
 }

@@ -5,18 +5,20 @@ import java.util.List;
 
 public class Estudiante {
     // Atributos de la clase modelo.Estudiante
-    private String rut;
+    private String rut; // Guardado en formato original (e.g., 12.345.678-9)
     private String nombre;
-    private String password; // Debe ser serializado
+    private String password;
     private String curso;
     private List<String> asignaturasInscritas;
 
     // Constructor principal
     public Estudiante(String rut, String nombre, String password, String curso, List<String> asignaturasInscritas) {
-        this.rut = rut;
-        this.nombre = nombre;
-        this.password = password; // Contraseña generada por Admin
-        this.curso = curso;
+        // Mantenemos el rut y password tal como vienen para evitar doble sanitización
+        // La sanitización de espacios la hicimos, eso es correcto.
+        this.rut = rut != null ? rut.trim() : "";
+        this.nombre = nombre != null ? nombre.trim() : "";
+        this.password = password != null ? password.trim() : "";
+        this.curso = curso != null ? curso.trim() : "";
         this.asignaturasInscritas = asignaturasInscritas != null ? asignaturasInscritas : new ArrayList<>();
     }
 
@@ -25,7 +27,7 @@ public class Estudiante {
         this(rut, nombre, password, curso, null);
     }
 
-    // Getters y Setters
+    // Getters
     public String getRut() {
         return rut;
     }
@@ -34,9 +36,6 @@ public class Estudiante {
         return nombre;
     }
 
-    /**
-     * MÉTODO CLAVE: Permite a SistemaInscripcion y GSON acceder al password.
-     */
     public String getPassword() {
         return password;
     }

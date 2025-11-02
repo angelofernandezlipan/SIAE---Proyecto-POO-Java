@@ -1,5 +1,3 @@
-// Archivo: src/main/java/vista/VentanaInscripcion.java (Corregido)
-
 package vista;
 
 import controlador.ControladorInscripcion;

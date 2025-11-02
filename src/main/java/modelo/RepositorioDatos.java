@@ -4,44 +4,54 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import util.UtilidadesJSON;
 
+// Se definen dos rutas de archivos.
 public class RepositorioDatos {
-    private static final String FILE_PATH = "src/main/resources/datos.json";
+    private static final String FILE_DATOS_VOLATILES = "src/main/resources/datos_volatiles.json";
+    private static final String FILE_ASIGNATURAS_ESTATICAS = "src/main/resources/asignaturas.json";
 
-    /**
-     * Carga todos los datos (Estudiantes y Asignaturas) desde el JSON.
-     * @return JsonObject con "estudiantes" y "asignaturas".
-     */
-    public JsonObject cargarDatos() {
-        JsonObject datos = UtilidadesJSON.leerJSON(FILE_PATH);
+    // --- Métodos de Archivo de Asignaturas (Estático) ---
+
+    /** Carga solo la información de Asignaturas desde su archivo dedicado. */
+    public JsonObject cargarAsignaturas() {
+        JsonObject datos = UtilidadesJSON.leerJSON(FILE_ASIGNATURAS_ESTATICAS);
         if (datos == null) {
-            // Retorna un objeto vacío para inicializar listas vacías en SistemaInscripcion
             datos = new JsonObject();
-            datos.add("estudiantes", new JsonArray());
             datos.add("asignaturas", new JsonArray());
         }
         return datos;
     }
 
-    /**
-     * Guarda todos los datos (Estudiantes y Asignaturas) en el JSON.
-     * @param estudiantes Lista de estudiantes.
-     * @param asignaturas Lista de asignaturas.
-     */
-    public void guardarDatos(java.util.List<Estudiante> estudiantes, java.util.List<Asignatura> asignaturas) {
+    /** Guarda el estado (cupos y listas de inscritos) de las asignaturas. */
+    public void guardarAsignaturas(java.util.List<Asignatura> asignaturas) {
         JsonObject datos = new JsonObject();
-        datos.add("estudiantes", UtilidadesJSON.listToJsonArray(estudiantes));
         datos.add("asignaturas", UtilidadesJSON.listToJsonArray(asignaturas));
-        UtilidadesJSON.escribirJSON(FILE_PATH, datos);
+        UtilidadesJSON.escribirJSON(FILE_ASIGNATURAS_ESTATICAS, datos);
     }
 
-    /**
-     * Limpia el JSON para un estado inicial vacío.
-     */
-    public void limpiarDatos() {
+    // --- Métodos de Archivo de Datos Volátiles (Estudiantes) ---
+
+    /** Carga solo la información volátil (Estudiantes) desde su archivo. */
+    public JsonObject cargarEstudiantes() {
+        JsonObject datos = UtilidadesJSON.leerJSON(FILE_DATOS_VOLATILES);
+        if (datos == null) {
+            datos = new JsonObject();
+            datos.add("estudiantes", new JsonArray());
+        }
+        return datos;
+    }
+
+    /** Guarda solo la lista de Estudiantes (incluyendo credenciales). */
+    public void guardarEstudiantes(java.util.List<Estudiante> estudiantes) {
+        JsonObject datos = new JsonObject();
+        datos.add("estudiantes", UtilidadesJSON.listToJsonArray(estudiantes));
+        UtilidadesJSON.escribirJSON(FILE_DATOS_VOLATILES, datos);
+    }
+
+    /** Limpia los datos de estudiantes (el archivo volátil). */
+    public void limpiarEstudiantes() {
         JsonObject datosVacios = new JsonObject();
         datosVacios.add("estudiantes", new JsonArray());
-        datosVacios.add("asignaturas", new JsonArray());
-        UtilidadesJSON.escribirJSON(FILE_PATH, datosVacios);
-        System.out.println("🚨 ATENCIÓN: Todos los datos (estudiantes y asignaturas) en el JSON han sido eliminados.");
+        UtilidadesJSON.escribirJSON(FILE_DATOS_VOLATILES, datosVacios);
+        System.out.println("🚨 ATENCIÓN: Datos de estudiantes (volátiles) eliminados.");
     }
 }

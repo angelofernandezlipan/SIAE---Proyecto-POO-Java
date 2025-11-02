@@ -17,30 +17,30 @@ public class PanelAdmin extends JPanel {
     public PanelAdmin(ControladorAdmin contAdmin) {
         this.contAdmin = contAdmin;
 
+        // Inicialización de resultadosArea y campoRutaCarga (Necesario en el constructor)
+        resultadosArea = new JTextArea("Mensajes del sistema aparecerán aquí...");
+        campoRutaCarga = new JTextField(30);
+
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // --- Panel Superior Contenedor (para la Carga Masiva y el Botón de Logout) ---
+        // --- Panel Superior (Logout, Carga Masiva) ---
         JPanel panelSuperior = new JPanel(new BorderLayout(10, 10));
 
-        // Botón de Logout (Nuevo)
         JButton btnLogout = new JButton("⬅️ Cerrar Sesión y Volver al Login");
-        btnLogout.addActionListener(e -> contAdmin.manejarLogout()); // Delegación al controlador
+        btnLogout.addActionListener(e -> contAdmin.manejarLogout());
 
-        // Panel para el botón de logout (centrado a la derecha)
         JPanel panelLogout = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelLogout.add(btnLogout);
         panelSuperior.add(panelLogout, BorderLayout.NORTH);
 
-        // Panel de Carga Masiva
         JPanel panelCarga = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelCarga.setBorder(BorderFactory.createTitledBorder("Carga Masiva de Estudiantes (.txt/.csv)"));
 
         JLabel labelRuta = new JLabel("Ruta del archivo:");
-        campoRutaCarga = new JTextField(30);
         JButton botonCargar = new JButton("Cargar Estudiantes");
 
-        botonCargar.addActionListener(e -> intentarCargaMasiva()); // <--- Método conectado
+        botonCargar.addActionListener(e -> intentarCargaMasiva());
 
         panelCarga.add(labelRuta);
         panelCarga.add(campoRutaCarga);
@@ -48,7 +48,7 @@ public class PanelAdmin extends JPanel {
 
         panelSuperior.add(panelCarga, BorderLayout.SOUTH);
 
-        add(panelSuperior, BorderLayout.NORTH); // Agrega el panel superior completo
+        add(panelSuperior, BorderLayout.NORTH);
 
         // --- Panel Central: Reportes ---
         JPanel panelReportes = new JPanel(new GridLayout(2, 1, 10, 10));
@@ -62,10 +62,12 @@ public class PanelAdmin extends JPanel {
         JButton btnVerCredenciales = new JButton("3. Ver Credenciales");
         JButton btnLimpiarDatos = new JButton("⚠️ Limpiar TODOS los Datos (JSON)");
 
-        btnReporteCupos.addActionListener(e -> contAdmin.exportarReportes(1));
-        btnReporteInscripciones.addActionListener(e -> contAdmin.exportarReportes(2));
-        btnVerCredenciales.addActionListener(e -> verReporteCredenciales()); // <--- Método conectado
-        btnLimpiarDatos.addActionListener(e -> confirmarLimpiezaDatos()); // <--- Método conectado
+        // CLAVE: Conexión al nuevo método para mostrar el contenido
+        btnReporteCupos.addActionListener(e -> mostrarReporte(1, "Reporte de Cupos"));
+        btnReporteInscripciones.addActionListener(e -> mostrarReporte(2, "Reporte de Inscripciones"));
+
+        btnVerCredenciales.addActionListener(e -> verReporteCredenciales());
+        btnLimpiarDatos.addActionListener(e -> confirmarLimpiezaDatos());
 
         panelOpcionesReporte.add(btnReporteCupos);
         panelOpcionesReporte.add(btnReporteInscripciones);
@@ -76,20 +78,38 @@ public class PanelAdmin extends JPanel {
         panelReportes.add(panelOpcionesReporte);
 
         // 2. Área de resultados de operaciones
-        resultadosArea = new JTextArea("Mensajes del sistema aparecerán aquí...");
-        resultadosArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(resultadosArea);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Log de Operaciones"));
 
         panelReportes.add(scrollPane);
 
-        add(panelReportes, BorderLayout.CENTER); // Agrega el panel de reportes al centro
+        add(panelReportes, BorderLayout.CENTER);
     }
 
     // ====================================================================
-    // MÉTODOS AUXILIARES FALTANTES
+    // NUEVO MÉTODO AUXILIAR PARA MOSTRAR REPORTES
     // ====================================================================
 
+    private void mostrarReporte(int tipoReporte, String nombreReporte) {
+        // 1. Obtener el contenido del reporte (llama al método modificado en GestionAdministrativa)
+        List<String> reporteContenido = contAdmin.exportarReportes(tipoReporte);
+
+        resultadosArea.setText(""); // Limpia el área
+
+        // 2. Muestra la cabecera
+        mostrarMensaje("✅ Reporte generado y exportado: " + nombreReporte, false);
+        mostrarMensaje("------------------------------------------------------", false);
+
+        // 3. Muestra el contenido línea por línea
+        reporteContenido.forEach(linea -> {
+            resultadosArea.append(linea + "\n");
+        });
+
+        // Asegura el scroll hasta el inicio del reporte
+        resultadosArea.setCaretPosition(0);
+    }
+
+    // --- MÉTODOS AUXILIARES FALTANTES (Copiar desde tu versión anterior) ---
     private void intentarCargaMasiva() {
         String filePath = campoRutaCarga.getText().trim();
         if (filePath.isEmpty()) {
@@ -116,9 +136,7 @@ public class PanelAdmin extends JPanel {
     }
 
     private void verReporteCredenciales() {
-        // Llama al controlador para abrir el archivo y muestra el resultado.
         String resultado = contAdmin.abrirReporteCredenciales();
-
         boolean esError = resultado.startsWith("Error");
         mostrarMensaje(resultado, esError);
     }
