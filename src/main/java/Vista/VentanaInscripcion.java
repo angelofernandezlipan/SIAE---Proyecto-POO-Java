@@ -1,64 +1,54 @@
-package Vista;
+package gui;
 
 import modelo.Asignatura;
 import modelo.Estudiante;
 import modelo.SistemaInscripcion;
-import modelo.acciones.DesinscribirAsignatura; // <-- Importa la nueva clase
+import modelo.acciones.DesinscribirAsignatura; // Importa la clase de acción
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * Ventana que permite a un estudiante INSCRIBIR y DESINSCRIBIR asignaturas.
- * Esta versión utiliza la clase de acción 'DesinscribirAsignatura'.
- */
 public class VentanaInscripcion {
 
-    // Referencias al sistema y al usuario logueado
+    // Referencias al "cerebro" y al usuario
     private SistemaInscripcion sistema;
     private Estudiante estudianteLogueado;
 
-    // Componentes de Swing
+    // Componentes principales de la ventana
     private JFrame ventana;
 
-    // Tabla 1: Asignaturas Disponibles
+    // Componentes de la Tabla 1 (Disponibles)
     private JTable tablaAsignaturas;
     private DefaultTableModel tableModel;
 
-    // Tabla 2: Asignaturas Inscritas
+    // Componentes de la Tabla 2 (Inscritas)
     private JTable tablaInscritas;
     private DefaultTableModel tableModelInscritas;
 
-    /**
-     * Constructor que recibe los datos necesarios para operar.
-     * @param sistema Instancia del sistema de inscripción.
-     * @param estudianteLogueado El objeto Estudiante que ha iniciado sesión.
-     */
     public VentanaInscripcion(SistemaInscripcion sistema, Estudiante estudianteLogueado) {
         this.sistema = sistema;
         this.estudianteLogueado = estudianteLogueado;
-
         crearVentana();
     }
 
     private void crearVentana() {
-        // Configuración de la ventana (alta para 2 tablas)
+        // --- Configuración General de la Ventana ---
         ventana = new JFrame("Gestión de Asignaturas - " + estudianteLogueado.getNombre());
-        ventana.setBounds(550, 150, 700, 750); // (x, y, ancho, alto)
+        ventana.setBounds(550, 150, 700, 750);
         ventana.getContentPane().setBackground(Color.WHITE);
-        ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana
         ventana.setLayout(null);
 
-        // --- SECCIÓN 1: ASIGNATURAS DISPONIBLES ---
-
+        // --- Sección 1: Tabla de Asignaturas Disponibles ---
         JLabel lblTitulo = new JLabel("Asignaturas Disponibles");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setBounds(50, 20, 400, 30);
         ventana.add(lblTitulo);
 
         String[] columnasDisponibles = {"Código", "Nombre", "Sección", "Cupos Disp."};
+        // Modelo de tabla no editable
         tableModel = new DefaultTableModel(columnasDisponibles, 0) {
             @Override public boolean isCellEditable(int row, int column) { return false; }
         };
@@ -72,8 +62,7 @@ public class VentanaInscripcion {
         botonInscribir.setBounds(200, 320, 250, 40);
         ventana.add(botonInscribir);
 
-        // --- SECCIÓN 2: MIS ASIGNATURAS INSCRITAS ---
-
+        // --- Sección 2: Tabla de Asignaturas Inscritas ---
         JLabel lblTituloInscritas = new JLabel("Mis Asignaturas Inscritas");
         lblTituloInscritas.setFont(new Font("Arial", Font.BOLD, 18));
         lblTituloInscritas.setBounds(50, 380, 400, 30);
@@ -94,48 +83,40 @@ public class VentanaInscripcion {
         botonDesinscribir.setForeground(Color.RED);
         ventana.add(botonDesinscribir);
 
-        // --- BOTÓN VOLVER ---
+        // --- Sección 3: Botones de Acción ---
         JButton botonVolver = new JButton("Volver al Menú");
         botonVolver.setBounds(50, 650, 150, 30);
         ventana.add(botonVolver);
 
-        // --- Lógica y Action Listeners ---
-
-        // 1. Cargar AMBAS tablas al abrir la ventana
+        // Carga los datos iniciales en ambas tablas
         actualizarAmbasTablas();
 
-        // 2. Acción del botón Inscribir
+        // Asigna la acción al botón de inscribir
         botonInscribir.addActionListener(e -> {
             inscribirAsignaturaSeleccionada();
         });
 
-        // 3. Acción del botón Desinscribir
+        // Asigna la acción al botón de desinscribir
         botonDesinscribir.addActionListener(e -> {
-            // *** ¡AQUÍ ESTÁ EL CAMBIO! ***
             desinscribirAsignaturaSeleccionada();
         });
 
-        // 4. Acción del botón Volver
+        // Asigna la acción al botón de volver
         botonVolver.addActionListener(e -> {
-            ventana.dispose(); // Cierra solo esta ventana
+            ventana.dispose();
         });
 
+        // Muestra la ventana
         ventana.setVisible(true);
     }
 
-    /**
-     * Método de ayuda para actualizar los datos de ambas tablas.
-     */
     private void actualizarAmbasTablas() {
         cargarAsignaturasDisponibles();
         cargarAsignaturasInscritas();
     }
 
-    /**
-     * Carga la tabla de asignaturas DISPONIBLES.
-     */
     private void cargarAsignaturasDisponibles() {
-        tableModel.setRowCount(0);
+        tableModel.setRowCount(0); // Limpia la tabla
         List<Asignatura> asignaturas = sistema.getAsignaturas();
         for (Asignatura asig : asignaturas) {
             if (asig.getCuposDisponibles() > 0) {
@@ -150,12 +131,8 @@ public class VentanaInscripcion {
         }
     }
 
-    /**
-     * Carga la tabla de asignaturas INSCRITAS por el estudiante.
-     */
     private void cargarAsignaturasInscritas() {
-        tableModelInscritas.setRowCount(0);
-
+        tableModelInscritas.setRowCount(0); // Limpia la tabla
         List<String> codigosInscritos = estudianteLogueado.getAsignaturasInscritas();
 
         for (String codigo : codigosInscritos) {
@@ -171,9 +148,6 @@ public class VentanaInscripcion {
         }
     }
 
-    /**
-     * Lógica para el botón INSCRIBIR.
-     */
     private void inscribirAsignaturaSeleccionada() {
         int selectedRow = tablaAsignaturas.getSelectedRow();
         if (selectedRow == -1) {
@@ -188,18 +162,15 @@ public class VentanaInscripcion {
         // Llama a la lógica de negocio en SistemaInscripcion
         String resultado = sistema.inscribirAsignatura(estudianteLogueado, codigoAsignatura);
 
+        // Muestra el resultado y actualiza las tablas
         if (resultado.startsWith("¡Inscripción exitosa")) {
             JOptionPane.showMessageDialog(ventana, resultado, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            actualizarAmbasTablas(); // Actualiza ambas tablas
+            actualizarAmbasTablas();
         } else {
             JOptionPane.showMessageDialog(ventana, resultado, "Error de Inscripción", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    /**
-     * Lógica para el botón DESINSCRIBIR.
-     * Esta versión llama a la clase de acción 'DesinscribirAsignatura'.
-     */
     private void desinscribirAsignaturaSeleccionada() {
         int selectedRow = tablaInscritas.getSelectedRow();
         if (selectedRow == -1) {
@@ -212,24 +183,24 @@ public class VentanaInscripcion {
         String codigoAsignatura = (String) tableModelInscritas.getValueAt(selectedRow, 0);
         String nombreAsignatura = (String) tableModelInscritas.getValueAt(selectedRow, 1);
 
-        // Preguntar por confirmación
+        // Pide confirmación antes de desinscribir
         int confirm = JOptionPane.showConfirmDialog(ventana,
                 "¿Estás seguro de que deseas desinscribir '" + nombreAsignatura + "'?",
                 "Confirmar Desinscripción",
                 JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-
-            // *** ¡AQUÍ ESTÁ LA LLAMADA A LA NUEVA CLASE! ***
+            // Llama a la clase de acción estática para ejecutar la lógica
             String resultado = DesinscribirAsignatura.ejecutar(
                     this.sistema,
                     this.estudianteLogueado,
                     codigoAsignatura
             );
 
+            // Muestra el resultado y actualiza las tablas
             if (resultado.startsWith("¡Desinscripción exitosa")) {
                 JOptionPane.showMessageDialog(ventana, resultado, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                actualizarAmbasTablas(); // Actualiza ambas tablas
+                actualizarAmbasTablas();
             } else {
                 JOptionPane.showMessageDialog(ventana, resultado, "Error de Desinscripción", JOptionPane.ERROR_MESSAGE);
             }
