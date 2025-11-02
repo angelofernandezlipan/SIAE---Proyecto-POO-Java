@@ -1,20 +1,21 @@
+package modelo;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Estudiante {
-    // Atributos de la clase Estudiante
     private String rut;
     private String nombre;
-    private String password;
-    private String curso; // Nuevo atributo
+    private String password; // Se mantiene para simplificar la carga masiva
+    private String curso;
     private List<String> asignaturasInscritas;
 
-    // Constructor de la clase
+    // Constructor principal
     public Estudiante(String rut, String nombre, String password, String curso, List<String> asignaturasInscritas) {
         this.rut = rut;
         this.nombre = nombre;
         this.password = password;
-        this.curso = curso; // Asignación del nuevo atributo
+        this.curso = curso;
         this.asignaturasInscritas = asignaturasInscritas != null ? asignaturasInscritas : new ArrayList<>();
     }
 
