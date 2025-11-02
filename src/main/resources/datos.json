@@ -7,8 +7,8 @@
       "curso": "4A",
       "asignaturasInscritas": [
         "ART101",
-        "HUM202",
-        "CIE303"
+        "CIE303",
+        "HUM707"
       ]
     },
     {
@@ -32,7 +32,7 @@
       "nombre": "Filosofia y Etica",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 44
+      "cuposDisponibles": 45
     },
     {
       "codigo": "CIE303",
@@ -60,7 +60,7 @@
       "nombre": "Historia de Chile",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45
+      "cuposDisponibles": 44
     }
   ]
 }

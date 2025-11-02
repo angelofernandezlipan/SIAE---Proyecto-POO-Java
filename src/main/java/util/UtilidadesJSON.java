@@ -16,7 +16,7 @@ import java.util.List;
 
 public class UtilidadesJSON {
 
-    // Método para leer JSON
+    // Méthodo para leer JSON
     public static JsonObject leerJSON(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
@@ -27,7 +27,7 @@ public class UtilidadesJSON {
         }
     }
 
-    // Método para escribir un JsonObject
+    // Méthodo para escribir un JsonObject
     public static void escribirJSON(String filePath, JsonObject data) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {
