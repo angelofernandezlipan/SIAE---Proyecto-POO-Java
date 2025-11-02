@@ -5,20 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="Modificacion a las Ventanas e implementancion de los controladores">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorInscripcion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorLogin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorPrincipalEstudiante.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/modelo/DesinscribirAsignatura.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaInscripcion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaLogin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaPrincipalEstudiante.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/launcher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/launcher/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/UtilidadesJSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/UtilidadesJSON.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/datos.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/datos.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Vista/VentanaInscripcion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vista/VentanaInscripcion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Vista/VentanaLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vista/VentanaLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Vista/VentanaPrincipalEstudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vista/VentanaPrincipalEstudiante.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +30,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "angelofernandezlipan"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/angelofernandezlipan/SIAE---Proyecto-POO-Java.git",
+    "accountId": "54a76954-0616-4e18-afbd-3b8ae4a38cdb"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -54,7 +56,8 @@
     "Application.Main.executor": "Run",
     "JUnit.PruebasUnitarias.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "rama-jpbasso",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/jpbasso/Ruleta"
   }
@@ -75,13 +78,6 @@
         <item itemvalue="JUnit.PruebasUnitarias" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
