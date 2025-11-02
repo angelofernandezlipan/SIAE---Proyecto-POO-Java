@@ -5,7 +5,7 @@ public class Asignatura {
     private String nombre;
     private String seccion;
     private int cuposMaximos;
-    private int cuposDisponibles; // Se mantiene, pero su gestión debe ser atómica.
+    private int cuposDisponibles;
 
     // Constructor de la clase
     public Asignatura(String codigo, String nombre, String seccion, int cuposMaximos, int cuposDisponibles) {
@@ -16,7 +16,7 @@ public class Asignatura {
         this.cuposDisponibles = cuposDisponibles;
     }
 
-    // Getters y Setters (incluye un getter para la lista de estudiantes inscritos, que ahora es inútil)
+    // Getters y Setters
     public String getCodigo() {
         return codigo;
     }
@@ -33,14 +33,16 @@ public class Asignatura {
         return cuposDisponibles;
     }
 
-    // Nuevo: Método para decrementar cupos de forma controlada
+    public void setCuposDisponibles(int nuevosCupos) {this.cuposDisponibles = nuevosCupos;}
+
+    // Nuevo: Méthodo para decrementar cupos de forma controlada
     public void decrementarCupos() {
         if (this.cuposDisponibles > 0) {
             this.cuposDisponibles--;
         }
     }
 
-    // Nuevo: Método para incrementar cupos (si fuera necesario anular una inscripción)
+    // Nuevo: Méthodo para incrementar cupos (si fuera necesario anular una inscripción)
     public void incrementarCupos() {
         if (this.cuposDisponibles < this.cuposMaximos) {
             this.cuposDisponibles++;

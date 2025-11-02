@@ -4,23 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/target/classes/Asignatura.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Asignatura.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Estudiante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Estudiante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MenuConsola.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/MenuConsola.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Sesion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Sesion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SistemaInscripcion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SistemaInscripcion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/UtilidadesJSON.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/UtilidadesJSON.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/datos.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/datos.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PruebasUnitarias.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PruebasUnitarias.class" afterDir="false" />
+    <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="Modificacion a las Ventanas e implementancion de los controladores">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorInscripcion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorLogin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorPrincipalEstudiante.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/modelo/DesinscribirAsignatura.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaInscripcion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaLogin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaPrincipalEstudiante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/launcher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/launcher/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/UtilidadesJSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/UtilidadesJSON.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/datos.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/datos.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -37,9 +54,9 @@
     "Application.Main.executor": "Run",
     "JUnit.PruebasUnitarias.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "rama-victoria",
+    "git-widget-placeholder": "rama-jpbasso",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/victoria/IdeaProjects/SIAE beta"
+    "last_opened_file_path": "/home/jpbasso/Ruleta"
   }
 }]]></component>
   <component name="RunManager">
@@ -54,6 +71,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PruebasUnitarias" />
         <item itemvalue="JUnit.PruebasUnitarias" />
       </list>
     </recent_temporary>
@@ -74,5 +92,20 @@
       <updated>1758887276704</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Modificacion a las Ventanas e implementancion de los controladores" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificacion a las Ventanas e implementancion de los controladores" />
   </component>
 </project>

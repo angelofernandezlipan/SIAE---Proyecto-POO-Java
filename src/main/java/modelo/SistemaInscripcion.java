@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class SistemaInscripcion {
     private List<Estudiante> estudiantes;
     private List<Asignatura> asignaturas;
-    private final RepositorioDatos repositorio; // Inyección de dependencia
+    private final RepositorioDatos repositorio;
 
     public SistemaInscripcion(RepositorioDatos repositorio) {
         this.repositorio = repositorio;
@@ -43,7 +43,7 @@ public class SistemaInscripcion {
         System.out.println("SistemaInscripcion inicializado. Estudiantes: " + estudiantes.size() + ", Asignaturas: " + asignaturas.size());
     }
 
-    /** Guarda los datos. Debe ser llamado después de cada modificación al modelo. */
+
     public void guardarDatos() {
         repositorio.guardarDatos(estudiantes, asignaturas);
     }
@@ -129,11 +129,36 @@ public class SistemaInscripcion {
         return "¡Inscripción exitosa en " + asignatura.getNombre() + "!";
     }
 
-    /** Llama a la función de limpieza del repositorio. */
     public void limpiarDatosSistema() {
         repositorio.limpiarDatos();
         // Recarga el sistema con listas vacías después de la limpieza
         this.estudiantes = new ArrayList<>();
         this.asignaturas = new ArrayList<>();
+    }
+
+    public String desinscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
+
+        // 1. Buscar la asignatura
+        Asignatura asignatura = this.buscarAsignaturaPorCodigo(codigoAsignatura);
+
+        if (asignatura == null) {
+            return "Error: La asignatura no se encuentra en el sistema.";
+        }
+
+        // 2. Validar si el estudiante está inscrito
+        if (!estudiante.getAsignaturasInscritas().contains(codigoAsignatura)) {
+            return "Error: No estás inscrito en esta asignatura.";
+        }
+
+        // 3. Realizar la desinscripción (en el estudiante)
+        estudiante.getAsignaturasInscritas().remove(codigoAsignatura);
+
+        // 4. Devolver el cupo (en la asignatura)
+        asignatura.incrementarCupos();
+
+        // 5. Guardar los cambios
+        this.guardarDatos();
+
+        return "¡Desinscripción exitosa de " + asignatura.getNombre() + "!";
     }
 }
