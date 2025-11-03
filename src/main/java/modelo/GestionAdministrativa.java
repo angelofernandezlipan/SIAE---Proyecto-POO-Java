@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GestionAdministrativa {
-    private final SistemaInscripcion sistema; // Inyección de dependencia
+    private final SistemaInscripcion sistema;
 
     public GestionAdministrativa(SistemaInscripcion sistema) {
         this.sistema = sistema;
@@ -15,11 +15,10 @@ public class GestionAdministrativa {
 
     // Genera una contraseña simple (ej: "pass123")
     private String generarContrasenaSimple() {
-        // Genera un número aleatorio de 3 dígitos (entre 100 y 999)
         return "pass" + (new Random().nextInt(900) + 100);
     }
 
-    // Carga masiva de estudiantes desde un archivo TXT/CSV (Admin)
+    // Carga masiva de estudiantes (se mantiene igual)
     public List<String> cargarListaCursos(String filePath) {
         List<String> errores = new ArrayList<>();
         List<String> lineas = UtilidadesArchivo.leerArchivo(filePath);
@@ -42,14 +41,13 @@ public class GestionAdministrativa {
                 if (curso.matches("^[34][AB]$")) {
                     String password = generarContrasenaSimple();
 
-                    // Uso de la validación del sistema (rut, "N/A" para solo verificar existencia)
                     if (sistema.validarCredenciales(rut, "N/A") != null) {
                         errores.add("Advertencia: Estudiante con RUT " + rut + " ya existe y fue omitido.");
                         continue;
                     }
 
                     Estudiante nuevoEst = new Estudiante(rut, nombre, password, curso);
-                    sistema.agregarEstudiante(nuevoEst); // Añadir al modelo
+                    sistema.agregarEstudiante(nuevoEst);
                     listaExportar.add(String.format("%s\t%s\t%s\t%s", rut, nombre, curso, password));
                 } else {
                     errores.add("Error: Formato de curso inválido en línea: " + linea);
@@ -59,23 +57,23 @@ public class GestionAdministrativa {
             }
         }
 
-        // CLAVE: Persistir los nuevos estudiantes y exportar las credenciales
-        if (errores.stream().noneMatch(s -> s.startsWith("Error:"))) { // Solo si no hay errores fatales
-            sistema.guardarDatos(); // Persiste la lista completa de estudiantes actualizada
-            UtilidadesArchivo.exportarArchivo("reporte_credenciales_admin.txt", listaExportar); // Exporta las credenciales
+        if (errores.stream().noneMatch(s -> s.startsWith("Error:"))) {
+            sistema.guardarDatos();
+            UtilidadesArchivo.exportarArchivo("reporte_credenciales_admin.txt", listaExportar);
             errores.add(0, "Carga masiva exitosa. Estudiantes registrados y credenciales exportadas.");
         }
         return errores;
     }
 
-    // Exporta reportes administrativos a archivos TXT
-    public void exportarReportes(int tipoReporte) {
+    // Exporta reportes administrativos a archivos TXT y RETORNA el contenido
+    public List<String> exportarReportes(int tipoReporte) { // <-- FIRMA CORREGIDA: Ahora retorna List<String>
         List<String> reporte = new ArrayList<>();
         String filename = "";
 
         switch (tipoReporte) {
             case 1: // Reporte de Cupos Disponibles
                 filename = "reporte_cupos_asignaturas.txt";
+                reporte.add("--- REPORTE DE CUPOS DISPONIBLES ---");
                 reporte.add("CÓDIGO\tNOMBRE\tSECCIÓN\tCUPOS DISPONIBLES\tCUPOS MÁXIMOS");
                 sistema.getAsignaturas().forEach(asig ->
                         reporte.add(String.format("%s\t%s\t%s\t%d\t%d",
@@ -86,6 +84,7 @@ public class GestionAdministrativa {
 
             case 2: // Reporte de Inscripciones por Estudiante y Curso
                 filename = "reporte_inscripciones_estudiantes.txt";
+                reporte.add("--- REPORTE DE INSCRIPCIONES POR ESTUDIANTE ---");
                 reporte.add("RUT\tNOMBRE\tCURSO\tASIGNATURAS INSCRITAS");
                 sistema.getEstudiantes().forEach(est -> {
                     String asignaturas = est.getAsignaturasInscritas().isEmpty() ?
@@ -95,12 +94,13 @@ public class GestionAdministrativa {
                 });
                 break;
             default:
-                System.out.println("Tipo de reporte inválido.");
-                return;
+                reporte.add("Tipo de reporte inválido.");
+                return reporte; // Retorna el mensaje de error
         }
 
         if (!reporte.isEmpty()) {
-            UtilidadesArchivo.exportarArchivo(filename, reporte);
+            UtilidadesArchivo.exportarArchivo(filename, reporte); // Exporta a TXT
         }
+        return reporte; // <--- Retorna el contenido para la vista (PanelAdmin)
     }
 }

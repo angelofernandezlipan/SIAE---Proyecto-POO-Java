@@ -1,10 +1,6 @@
 package vista;
 
-import controlador.ControladorLogin; // <- ¡NUEVO! Importa el controlador
-
-// ¡YA NO SE IMPORTAN!
-// import modelo.SistemaInscripcion;
-// import modelo.Estudiante;
+import controlador.ControladorLogin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +10,13 @@ import java.awt.event.KeyEvent;
 public class VentanaLogin {
 
     // --- Atributos ---
-    // ¡El cambio clave! Ya no guarda el Modelo (SistemaInscripcion)
     private final ControladorLogin controlador;
 
     // Componentes de la Vista
     private final JFrame login;
     private final JTextField campoUsuario;
     private final JPasswordField campoContraseña;
+    private final JComboBox<String> campoRol; // <--- ¡NUEVO! Selector de rol
     private final JButton botonIniciarSesion;
     private final JLabel mensaje;
 
@@ -31,9 +27,7 @@ public class VentanaLogin {
     public VentanaLogin(ControladorLogin controlador) {
         // 1. Guarda la referencia al controlador
         this.controlador = controlador;
-
-        // 2. La Vista se "registra" con el controlador
-        this.controlador.setVista(this);
+        this.controlador.setVista(this); // La Vista se "registra" con el controlador
 
         // --- Configuración de la Ventana ---
         login = new JFrame("SIAE - Inicio de Sesión");
@@ -42,53 +36,70 @@ public class VentanaLogin {
         login.getContentPane().setBackground(Color.WHITE);
         login.setLayout(null);
 
-        // --- Creación de Componentes ---
-        JLabel labelUsuario = new JLabel("Usuario (RUT):");
-        labelUsuario.setBounds(100, 100, 100, 30);
+        int y_pos = 70; // Posición inicial Y
+
+        // 1. Selector de Rol (Nuevo)
+        JLabel labelRol = new JLabel("Rol:");
+        labelRol.setBounds(100, y_pos, 100, 30);
+        labelRol.setForeground(Color.BLACK);
+        login.add(labelRol);
+
+        String[] roles = {"Estudiante", "Administrador"};
+        campoRol = new JComboBox<>(roles);
+        campoRol.setBounds(200, y_pos, 250, 30);
+        login.add(campoRol);
+
+        y_pos += 50; // Siguiente posición
+
+        // 2. Campo Usuario
+        JLabel labelUsuario = new JLabel("Usuario (RUT/Admin):");
+        labelUsuario.setBounds(100, y_pos, 150, 30);
         labelUsuario.setForeground(Color.BLACK);
         login.add(labelUsuario);
 
         campoUsuario = new JTextField();
-        campoUsuario.setBounds(200, 100, 250, 30);
+        campoUsuario.setBounds(250, y_pos, 200, 30);
         login.add(campoUsuario);
 
+        y_pos += 50; // Siguiente posición
+
+        // 3. Campo Contraseña
         JLabel labelContraseña = new JLabel("Contraseña:");
-        labelContraseña.setBounds(100, 150, 100, 30);
+        labelContraseña.setBounds(100, y_pos, 100, 30);
         labelContraseña.setForeground(Color.BLACK);
         login.add(labelContraseña);
 
         campoContraseña = new JPasswordField();
-        campoContraseña.setBounds(200, 150, 250, 30);
+        campoContraseña.setBounds(250, y_pos, 200, 30);
         login.add(campoContraseña);
 
+        y_pos += 30; // Ajuste para el mensaje
+
+        // 4. Mensaje de Error
         mensaje = new JLabel();
-        mensaje.setBounds(100, 180, 350, 25);
+        mensaje.setBounds(100, y_pos, 350, 25);
         mensaje.setHorizontalAlignment(SwingConstants.CENTER);
         mensaje.setVisible(false);
         login.add(mensaje);
 
+        y_pos += 30; // Posición del botón
+
+        // 5. Botón
         botonIniciarSesion = new JButton("Iniciar Sesión");
-        botonIniciarSesion.setBounds(200, 200, 150, 40);
+        botonIniciarSesion.setBounds(200, y_pos, 150, 40);
         login.add(botonIniciarSesion);
 
-        // --- Action Listeners (El gran cambio) ---
-
-        // 3. El ActionListener AHORA SOLO DELEGA en el controlador
-        botonIniciarSesion.addActionListener(e -> {
-            intentarLogin();
-        });
-
-        // 4. El KeyListener también se simplifica
+        // --- Action Listeners ---
+        botonIniciarSesion.addActionListener(e -> intentarLogin());
         campoContraseña.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    // Llama al mismo méthodo que el botón
                     intentarLogin();
                 }
             }
         });
 
-        // 5. Hacer visible la ventana
+        // 6. Hacer visible la ventana
         login.setVisible(true);
     }
 
@@ -96,29 +107,21 @@ public class VentanaLogin {
      * Méthodo privado que recolecta los datos y los pasa al controlador.
      */
     private void intentarLogin() {
-        String rutIngresado = campoUsuario.getText();
-        String contraseñaIngresada = new String(campoContraseña.getPassword());
+        String rolSeleccionado = (String) campoRol.getSelectedItem(); // Obtiene el rol
+        String usuario = campoUsuario.getText();
+        String contraseña = new String(campoContraseña.getPassword());
 
-        // La Vista le pasa los datos al Controlador, no sabe qué hacer con ellos
-        controlador.intentarLogin(rutIngresado, contraseñaIngresada);
+        // La Vista DELEGA la decisión y la lógica en el Controlador
+        controlador.intentarLogin(rolSeleccionado, usuario, contraseña);
     }
 
-    // --- Métodos Públicos para el Controlador ---
-    // El Controlador usará estos métodos para manipular la Vista
-
-    /**
-     * Muestra un mensaje de error en la ventana.
-     * @param textoError El mensaje a mostrar.
-     */
+    // --- Métodos Públicos para el Controlador (sin cambios) ---
     public void mostrarError(String textoError) {
         mensaje.setText(textoError);
         mensaje.setForeground(Color.RED);
         mensaje.setVisible(true);
     }
 
-    /**
-     * Cierra la ventana de login.
-     */
     public void cerrar() {
         login.dispose();
     }

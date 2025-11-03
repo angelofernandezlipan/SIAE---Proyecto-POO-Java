@@ -4,27 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Estudiante {
-    private String rut;
+    // Atributos de la clase modelo.Estudiante
+    private String rut; // Guardado en formato original (e.g., 12.345.678-9)
     private String nombre;
-    private String password; // Se mantiene para simplificar la carga masiva
+    private String password;
     private String curso;
     private List<String> asignaturasInscritas;
 
     // Constructor principal
     public Estudiante(String rut, String nombre, String password, String curso, List<String> asignaturasInscritas) {
-        this.rut = rut;
-        this.nombre = nombre;
-        this.password = password;
-        this.curso = curso;
+        // Mantenemos el rut y password tal como vienen para evitar doble sanitización
+        // La sanitización de espacios la hicimos, eso es correcto.
+        this.rut = rut != null ? rut.trim() : "";
+        this.nombre = nombre != null ? nombre.trim() : "";
+        this.password = password != null ? password.trim() : "";
+        this.curso = curso != null ? curso.trim() : "";
         this.asignaturasInscritas = asignaturasInscritas != null ? asignaturasInscritas : new ArrayList<>();
     }
 
-    // Constructor auxiliar para la carga masiva (sin lista de inscritas al inicio)
+    // Constructor auxiliar para la carga masiva
     public Estudiante(String rut, String nombre, String password, String curso) {
         this(rut, nombre, password, curso, null);
     }
 
-    // Getters y Setters
+    // Getters
     public String getRut() {
         return rut;
     }
@@ -45,7 +48,7 @@ public class Estudiante {
         return asignaturasInscritas;
     }
 
-    //Para añadir una asignatura a la lista de inscritas
+    // Método para añadir una asignatura a la lista de inscritas
     public void agregarAsignaturaInscrita(String codigoAsignatura) {
         this.asignaturasInscritas.add(codigoAsignatura);
     }
