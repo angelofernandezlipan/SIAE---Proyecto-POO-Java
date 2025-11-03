@@ -54,3 +54,5 @@ public class Main {
         new VentanaLogin(contLogin);
     }
 }
+
+// Tiene muchas líneas pero son, en su gran mayoría, comentarios.
