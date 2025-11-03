@@ -10,12 +10,12 @@ import controlador.ControladorLogin;
 
 public class Main {
     public static void main(String[] args) {
-        // --- 1. Inicialización de la capa de Modelo y Persistencia ---
+        // 1. Inicialización de la capa de Modelo y Persistencia
         RepositorioDatos repositorio = new RepositorioDatos();
         SistemaInscripcion sistema = new SistemaInscripcion(repositorio);
         Sesion sesion = new Sesion();
 
-        // --- 2. Declaración de variables para los Controladores ---
+        // 2. Declaración de variables para los Controladores
         // Se declaran primero como variables para poder pasarlas como argumentos a sí mismas.
         ControladorEstudiante contEstudiante;
         ControladorAdmin contAdmin;
@@ -26,7 +26,7 @@ public class Main {
 
         contEstudiante = new ControladorEstudiante(sistema, sesion);
 
-        // ¡CLAVE! Se inicializa contAdmin con los 3 argumentos: sistema, contEstudiante y contAdmin (a sí mismo).
+        // Se inicializa contAdmin con los 3 argumentos: sistema, contEstudiante y contAdmin (a sí mismo).
         // Se pasa la variable contAdmin (aunque aún no está completamente inicializada, su referencia es válida
         // para el constructor, ya que solo se usará después del Main).
         contAdmin = new ControladorAdmin(sistema, contEstudiante, null);
@@ -42,8 +42,8 @@ public class Main {
         ControladorEstudiante contEstudianteGlobal = new ControladorEstudiante(sistema, sesion);
         ControladorAdmin contAdminGlobal = new ControladorAdmin(sistema, null, null); // Inicialización placeholder
 
-        // 3. Ahora que existen, se inyectan las referencias globales usando el método setControladoresGlobales
-        // (Este método debe existir en tu ControladorAdmin y ControladorEstudiante para esta solución).
+        // 3. Ahora que existen, se inyectan las referencias globales usando el méthodo setControladoresGlobales
+        // (Este méthodo debe existir en tu ControladorAdmin y ControladorEstudiante para esta solución).
         contAdminGlobal.setControladoresGlobales(contEstudianteGlobal, contAdminGlobal);
         contEstudianteGlobal.setControladoresGlobales(contEstudianteGlobal, contAdminGlobal);
 
