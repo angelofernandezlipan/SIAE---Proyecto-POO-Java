@@ -1,3 +1,5 @@
+package modelo;
+
 import modelo.Asignatura;
 import modelo.Estudiante;
 import modelo.SistemaInscripcion;
@@ -7,7 +9,6 @@ public class DesinscribirAsignatura {
     public static String ejecutar(SistemaInscripcion sistema, Estudiante estudiante, String codigoAsignatura) {
 
         // 1. Buscar la asignatura en el sistema
-        // (Usamos el método público que ya existe en SistemaInscripcion)
         Asignatura asignatura = sistema.buscarAsignaturaPorCodigo(codigoAsignatura);
 
         if (asignatura == null) {
@@ -31,8 +32,7 @@ public class DesinscribirAsignatura {
         asignatura.setCuposDisponibles(asignatura.getCuposDisponibles() + 1);
 
         // 5. Guardar los cambios en el JSON
-        // (Usamos el método público de SistemaInscripcion)
-        sistema.guardarDatosEnJSON();
+        sistema.guardarDatos();
 
         return "¡Desinscripción exitosa de " + asignatura.getNombre() + "!";
     }

@@ -11,60 +11,77 @@ import java.util.stream.Collectors;
 public class SistemaInscripcion {
     private List<Estudiante> estudiantes;
     private List<Asignatura> asignaturas;
-    private final RepositorioDatos repositorio; // Inyección de dependencia
+    private final RepositorioDatos repositorio;
 
     public SistemaInscripcion(RepositorioDatos repositorio) {
         this.repositorio = repositorio;
-        // Carga los datos existentes al inicio, NO los sobrescribe.
         cargarDatosIniciales();
     }
 
     // --- Métodos de Gestión Interna ---
-
     private void cargarDatosIniciales() {
-        JsonObject datos = repositorio.cargarDatos();
-
-        // Carga de Asignaturas
-        JsonArray asignaturasArray = datos.getAsJsonArray("asignaturas");
-        if (asignaturasArray != null) {
-            this.asignaturas = UtilidadesJSON.jsonArrayToList(asignaturasArray, Asignatura.class);
-        } else {
-            this.asignaturas = new ArrayList<>();
-        }
-
-        // Carga de Estudiantes
-        JsonArray estudiantesArray = datos.getAsJsonArray("estudiantes");
+        // Carga de Estudiantes (Volátil)
+        JsonObject datosEstudiantes = repositorio.cargarEstudiantes();
+        JsonArray estudiantesArray = datosEstudiantes.getAsJsonArray("estudiantes");
         if (estudiantesArray != null) {
             this.estudiantes = UtilidadesJSON.jsonArrayToList(estudiantesArray, Estudiante.class);
         } else {
             this.estudiantes = new ArrayList<>();
         }
 
+        // Carga de Asignaturas (Estática)
+        JsonObject datosAsignaturas = repositorio.cargarAsignaturas();
+        JsonArray asignaturasArray = datosAsignaturas.getAsJsonArray("asignaturas");
+
+        if (asignaturasArray != null && asignaturasArray.size() > 0) {
+            this.asignaturas = UtilidadesJSON.jsonArrayToList(asignaturasArray, Asignatura.class);
+            System.out.println("SistemaInscripcion: Asignaturas cargadas desde archivo estático.");
+        } else {
+            // Inicialización Defensiva: Crea la lista si no existe y la guarda en el archivo estático.
+            System.out.println("SistemaInscripcion: Creando y guardando asignaturas por defecto en el archivo estático.");
+            this.asignaturas = crearAsignaturasIniciales();
+            repositorio.guardarAsignaturas(this.asignaturas);
+        }
+
         System.out.println("SistemaInscripcion inicializado. Estudiantes: " + estudiantes.size() + ", Asignaturas: " + asignaturas.size());
     }
 
-    /** Guarda los datos. Debe ser llamado después de cada modificación al modelo. */
+    private List<Asignatura> crearAsignaturasIniciales() {
+        List<Asignatura> lista = new ArrayList<>();
+        lista.add(new Asignatura("ART101", "Historia del Arte", "ARTISTICO", 45, 45));
+        lista.add(new Asignatura("HUM202", "Filosofia y Etica", "HUMANISTA", 45, 45));
+        lista.add(new Asignatura("CIE303", "Biologia Avanzada", "CIENTIFICO", 45, 45));
+        lista.add(new Asignatura("HUM505", "Literatura Universal", "HUMANISTA", 45, 45));
+        lista.add(new Asignatura("CIE606", "Fisica Moderna", "CIENTIFICO", 45, 45));
+        lista.add(new Asignatura("ART404", "Dibujo y Pintura", "ARTISTICO", 45, 45));
+        lista.add(new Asignatura("HUM707", "Historia de Chile", "HUMANISTA", 45, 45));
+        return lista;
+    }
+
     public void guardarDatos() {
-        repositorio.guardarDatos(estudiantes, asignaturas);
-    }
-
-    // --- Getters Públicos ---
-
-    public List<Estudiante> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public List<Asignatura> getAsignaturas() {
-        return asignaturas;
+        repositorio.guardarEstudiantes(estudiantes);
+        repositorio.guardarAsignaturas(asignaturas);
     }
 
     // --- Lógica de Estudiante ---
 
     public Estudiante validarCredenciales(String rut, String password) {
-        String rutNormalizado = rut.replace(".", "").replace("-", "");
+        // Normalización del RUT ingresado
+        String rutNormalizado = rut.replace(".", "").replace("-", "").trim();
+        // Normalización de la contraseña ingresada
+        String passwordNormalizada = password.trim();
+
         return estudiantes.stream()
-                .filter(est -> est.getRut().replace(".", "").replace("-", "").equals(rutNormalizado))
-                .filter(est -> password.equals("N/A") || est.getPassword().equals(password)) // "N/A" para chequeo interno
+                .filter(est -> {
+                    // FILTRO 1: ¿Coincide el RUT? (Sanitiza el RUT guardado)
+                    String estRutNormalizado = est.getRut().replace(".", "").replace("-", "").trim();
+                    return estRutNormalizado.equals(rutNormalizado);
+                })
+                .filter(est -> {
+                    // FILTRO 2: ¿Coincide la contraseña? (Sanitiza la contraseña guardada)
+                    String passwordGuardada = est.getPassword().trim();
+                    return passwordNormalizada.equals("N/A") || passwordGuardada.equals(passwordNormalizada);
+                })
                 .findFirst()
                 .orElse(null);
     }
@@ -89,51 +106,44 @@ public class SistemaInscripcion {
                 .collect(Collectors.toList());
     }
 
-    // --- Lógica de Inscripción ---
-
     public String inscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
         Asignatura asignatura = buscarAsignaturaPorCodigo(codigoAsignatura);
-        if (asignatura == null) {
-            return "Error: Asignatura no encontrada.";
-        }
-
-        // 1. Validación de cupos
-        if (asignatura.getCuposDisponibles() <= 0) {
-            return "Error: La asignatura no tiene cupos disponibles.";
-        }
-
-        // 2. Validación de inscritos (máximo 3)
-        if (estudiante.getAsignaturasInscritas().size() >= 3) {
-            return "Error: Ya tienes 3 asignaturas inscritas.";
-        }
-
-        // 3. Validación de duplicidad
-        if (estudiante.getAsignaturasInscritas().contains(codigoAsignatura)) {
-            return "Error: Ya estás inscrito en esta asignatura.";
-        }
-
-        // 4. Validación por sección (máximo 2 por sección)
+        if (asignatura == null) { return "Error: Asignatura no encontrada."; }
+        if (asignatura.getCuposDisponibles() <= 0) { return "Error: La asignatura no tiene cupos disponibles."; }
+        if (estudiante.getAsignaturasInscritas().size() >= 3) { return "Error: Ya tienes 3 asignaturas inscritas."; }
+        if (estudiante.getAsignaturasInscritas().contains(codigoAsignatura)) { return "Error: Ya estás inscrito en esta asignatura."; }
         long countSeccion = estudiante.getAsignaturasInscritas().stream()
                 .map(this::buscarAsignaturaPorCodigo)
                 .filter(asig -> asig != null && asig.getSeccion().equals(asignatura.getSeccion()))
                 .count();
-
-        if (countSeccion >= 2) {
-            return "Error: Ya tienes 2 asignaturas inscritas en la sección " + asignatura.getSeccion();
-        }
-
-        // Si todas las validaciones son exitosas, se realiza la inscripción
+        if (countSeccion >= 2) { return "Error: Ya tienes 2 asignaturas inscritas en la sección " + asignatura.getSeccion(); }
         estudiante.agregarAsignaturaInscrita(codigoAsignatura);
-        asignatura.decrementarCupos(); // Actualización atómica del modelo
-        guardarDatos(); // Persistir cambios
+        asignatura.decrementarCupos();
+        guardarDatos();
         return "¡Inscripción exitosa en " + asignatura.getNombre() + "!";
     }
 
-    /** Llama a la función de limpieza del repositorio. */
-    public void limpiarDatosSistema() {
-        repositorio.limpiarDatos();
-        // Recarga el sistema con listas vacías después de la limpieza
-        this.estudiantes = new ArrayList<>();
-        this.asignaturas = new ArrayList<>();
+    public String desinscribirAsignatura(Estudiante estudiante, String codigoAsignatura) {
+        Asignatura asignatura = this.buscarAsignaturaPorCodigo(codigoAsignatura);
+        if (asignatura == null) { return "Error: La asignatura no se encuentra en el sistema."; }
+        if (!estudiante.getAsignaturasInscritas().contains(codigoAsignatura)) { return "Error: No estás inscrito en esta asignatura."; }
+        estudiante.getAsignaturasInscritas().remove(codigoAsignatura);
+        asignatura.incrementarCupos();
+        this.guardarDatos();
+        return "¡Desinscripción exitosa de " + asignatura.getNombre() + "!";
     }
+
+    public void limpiarDatosSistema() {
+        repositorio.limpiarEstudiantes();
+        this.estudiantes = new ArrayList<>();
+        // Se mantiene el estado de las asignaturas
+        this.asignaturas = repositorio.cargarAsignaturas().getAsJsonArray("asignaturas") != null ?
+                UtilidadesJSON.jsonArrayToList(repositorio.cargarAsignaturas().getAsJsonArray("asignaturas"), Asignatura.class) :
+                new ArrayList<>();
+        System.out.println("Datos volátiles de estudiantes y de sesión limpiados.");
+    }
+
+    // Estos métodos DEBEN ser PUBLIC y estaban bien implementados
+    public List<Estudiante> getEstudiantes() { return estudiantes; }
+    public List<Asignatura> getAsignaturas() { return asignaturas; }
 }

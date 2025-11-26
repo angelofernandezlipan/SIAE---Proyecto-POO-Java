@@ -3,318 +3,319 @@
     {
       "rut": "﻿12.345.671-1",
       "nombre": "nn01",
-      "password": "pass580",
+      "password": "pass277",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.672-2",
       "nombre": "nn02",
-      "password": "pass592",
+      "password": "pass566",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.673-3",
       "nombre": "nn03",
-      "password": "pass763",
+      "password": "pass653",
       "curso": "4A",
-      "asignaturasInscritas": []
+      "asignaturasInscritas": [
+        "ART101"
+      ]
     },
     {
       "rut": "12.345.674-4",
       "nombre": "nn04",
-      "password": "pass783",
+      "password": "pass990",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.675-5",
       "nombre": "nn05",
-      "password": "pass393",
+      "password": "pass933",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.676-6",
       "nombre": "nn06",
-      "password": "pass338",
+      "password": "pass344",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.677-7",
       "nombre": "nn07",
-      "password": "pass267",
+      "password": "pass386",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.678-8",
       "nombre": "nn08",
-      "password": "pass978",
+      "password": "pass650",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.679-9",
       "nombre": "nn09",
-      "password": "pass520",
+      "password": "pass628",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.680-0",
       "nombre": "nn10",
-      "password": "pass308",
+      "password": "pass991",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.681-1",
       "nombre": "nn11",
-      "password": "pass378",
+      "password": "pass404",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.682-2",
       "nombre": "nn12",
-      "password": "pass933",
+      "password": "pass531",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.683-3",
       "nombre": "nn13",
-      "password": "pass358",
+      "password": "pass687",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.684-4",
       "nombre": "nn14",
-      "password": "pass132",
+      "password": "pass559",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.685-5",
       "nombre": "nn15",
-      "password": "pass426",
+      "password": "pass213",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.686-6",
       "nombre": "nn16",
-      "password": "pass114",
+      "password": "pass948",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.687-7",
       "nombre": "nn17",
-      "password": "pass379",
+      "password": "pass729",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.688-8",
       "nombre": "nn18",
-      "password": "pass293",
+      "password": "pass595",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.689-9",
       "nombre": "nn19",
-      "password": "pass306",
+      "password": "pass244",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.690-0",
       "nombre": "nn20",
-      "password": "pass330",
+      "password": "pass306",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.691-1",
       "nombre": "nn21",
-      "password": "pass554",
+      "password": "pass655",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.692-2",
       "nombre": "nn22",
-      "password": "pass796",
+      "password": "pass677",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.693-3",
       "nombre": "nn23",
-      "password": "pass776",
+      "password": "pass981",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.694-4",
       "nombre": "nn24",
-      "password": "pass362",
+      "password": "pass806",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.695-5",
       "nombre": "nn25",
-      "password": "pass737",
+      "password": "pass717",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.696-6",
       "nombre": "nn26",
-      "password": "pass194",
+      "password": "pass162",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.697-7",
       "nombre": "nn27",
-      "password": "pass535",
+      "password": "pass677",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.698-8",
       "nombre": "nn28",
-      "password": "pass859",
+      "password": "pass173",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.699-9",
       "nombre": "nn29",
-      "password": "pass511",
+      "password": "pass934",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.700-0",
       "nombre": "nn30",
-      "password": "pass195",
+      "password": "pass654",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.701-1",
       "nombre": "nn31",
-      "password": "pass907",
+      "password": "pass444",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.702-2",
       "nombre": "nn32",
-      "password": "pass122",
+      "password": "pass280",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.703-3",
       "nombre": "nn33",
-      "password": "pass551",
+      "password": "pass498",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.704-4",
       "nombre": "nn34",
-      "password": "pass789",
+      "password": "pass275",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.705-5",
       "nombre": "nn35",
-      "password": "pass527",
+      "password": "pass886",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.706-6",
       "nombre": "nn36",
-      "password": "pass888",
+      "password": "pass281",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.707-7",
       "nombre": "nn37",
-      "password": "pass756",
+      "password": "pass184",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.708-8",
       "nombre": "nn38",
-      "password": "pass960",
+      "password": "pass699",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.709-9",
       "nombre": "nn39",
-      "password": "pass455",
+      "password": "pass314",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.710-0",
       "nombre": "nn40",
-      "password": "pass138",
+      "password": "pass921",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.711-1",
       "nombre": "nn41",
-      "password": "pass172",
+      "password": "pass311",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.712-2",
       "nombre": "nn42",
-      "password": "pass312",
+      "password": "pass476",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.713-3",
       "nombre": "nn43",
-      "password": "pass984",
+      "password": "pass140",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.714-4",
       "nombre": "nn44",
-      "password": "pass938",
+      "password": "pass759",
       "curso": "4A",
       "asignaturasInscritas": []
     },
     {
       "rut": "12.345.715-5",
       "nombre": "nn45",
-      "password": "pass421",
+      "password": "pass917",
       "curso": "4A",
       "asignaturasInscritas": []
     }
-  ],
-  "asignaturas": []
+  ]
 }
