@@ -52,16 +52,7 @@ public class VentanaPrincipalEstudiante {
             controlador.manejarAperturaInscripcion();
         });
 
-        // --- 3. Botón "Desinscribir Asignaturas" ---
-        JButton botonDesinscribir = new JButton("Desinscribir Asignaturas");
-        botonDesinscribir.setBounds(150, 150, 300, 50); // Posición debajo del botón anterior
-        menuEstudiantes.add(botonDesinscribir);
 
-        // Acción para el botón Desinscribir
-        botonDesinscribir.addActionListener(e -> {
-            // ¡Usa la misma acción! La ventana de inscripción maneja ambos.
-            controlador.manejarAperturaInscripcion();
-        });
 
         // --- 4. Botón "Salir" (Cerrar Sesión) ---
         JButton botonSalir = new JButton("Salir (Cerrar Sesión)");

@@ -1,44 +1,60 @@
 package controlador;
 
 import modelo.Estudiante;
-import modelo.SistemaInscripcion;
 import vista.VentanaLogin;
 import vista.VentanaPrincipalEstudiante;
-
+import vista.VentanaPrincipal; // <--- ¡IMPORT FALTANTE AÑADIDO!
 
 public class ControladorLogin {
 
-    // --- Atributos ---
-    private final SistemaInscripcion sistema;
-    private VentanaLogin vistaLogin;
+    private final ControladorEstudiante contEstudiante;
+    private final ControladorAdmin contAdmin;
+    private VentanaLogin vista;
 
-
-    public ControladorLogin(SistemaInscripcion sistema) {
-        this.sistema = sistema;
+    public ControladorLogin(ControladorEstudiante contEstudiante, ControladorAdmin contAdmin) {
+        this.contEstudiante = contEstudiante;
+        this.contAdmin = contAdmin;
     }
 
-
-    public void setVista(VentanaLogin vistaLogin) {
-        this.vistaLogin = vistaLogin;
+    public void setVista(VentanaLogin vista) {
+        this.vista = vista;
     }
 
-    public void intentarLogin(String rut, String password) {
-        Estudiante estudiante = sistema.validarCredenciales(rut, password);
+    public void intentarLogin(String rol, String usuario, String password) {
+        vista.mostrarError("");
 
-        if (estudiante != null) {
+        if (rol.equals("Estudiante")) {
+            Estudiante estudiante = contEstudiante.login(usuario, password);
 
-            if (this.vistaLogin != null) {
-                this.vistaLogin.cerrar();
+            if (estudiante != null) {
+                vista.cerrar();
+
+                // 1. Crear el controlador de la ventana principal de estudiante.
+                // Se usa contEstudiante.getSistema() en lugar de contEstudiante.sistema
+                ControladorPrincipalEstudiante contPrincipalEst = new ControladorPrincipalEstudiante(
+                        contEstudiante.getSistema(), // <--- ¡ERROR DE ACCESO RESUELTO!
+                        estudiante,
+                        this.contEstudiante,
+                        this.contAdmin
+                );
+
+                // 2. Abrir la ventana de estudiante (con su controlador)
+                new VentanaPrincipalEstudiante(contPrincipalEst, estudiante.getNombre());
+
+            } else {
+                vista.mostrarError("Error: RUT o contraseña de estudiante incorrectos.");
             }
 
-            ControladorPrincipalEstudiante contPrincipal = new ControladorPrincipalEstudiante(this.sistema, estudiante);
+        } else if (rol.equals("Administrador")) {
+            boolean loginExitoso = contAdmin.login(usuario, password);
 
-            new VentanaPrincipalEstudiante(contPrincipal, estudiante.getNombre());
+            if (loginExitoso) {
+                vista.cerrar();
 
-        } else {
-
-            if (this.vistaLogin != null) {
-                this.vistaLogin.mostrarError("Usuario (RUT) o contraseña incorrectos");
+                // Inyección de los tres argumentos para el constructor de Administrador
+                new VentanaPrincipal(contAdmin, this.contEstudiante, this.contAdmin);
+            } else {
+                vista.mostrarError("Error: Usuario o contraseña de administrador incorrectos.");
             }
         }
     }
