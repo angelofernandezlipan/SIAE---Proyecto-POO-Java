@@ -1,16 +1,11 @@
 package modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Asignatura {
-    // Atributos de la clase modelo.Asignatura
     private String codigo;
     private String nombre;
     private String seccion;
     private int cuposMaximos;
     private int cuposDisponibles;
-    private List<String> estudiantesInscritos;
 
     // Constructor de la clase
     public Asignatura(String codigo, String nombre, String seccion, int cuposMaximos, int cuposDisponibles) {
@@ -19,7 +14,6 @@ public class Asignatura {
         this.seccion = seccion;
         this.cuposMaximos = cuposMaximos;
         this.cuposDisponibles = cuposDisponibles;
-        this.estudiantesInscritos = new ArrayList<>();
     }
 
     // Getters y Setters
@@ -39,24 +33,24 @@ public class Asignatura {
         return cuposDisponibles;
     }
 
-    public void setCuposDisponibles(int cuposDisponibles) {
-        this.cuposDisponibles = cuposDisponibles;
+    public void setCuposDisponibles(int nuevosCupos) {this.cuposDisponibles = nuevosCupos;}
+
+    // Nuevo: Méthodo para decrementar cupos de forma controlada
+    public void decrementarCupos() {
+        if (this.cuposDisponibles > 0) {
+            this.cuposDisponibles--;
+        }
+    }
+
+    // Nuevo: Méthodo para incrementar cupos (si fuera necesario anular una inscripción)
+    public void incrementarCupos() {
+        if (this.cuposDisponibles < this.cuposMaximos) {
+            this.cuposDisponibles++;
+        }
     }
 
     public int getCuposMaximos() {
         return cuposMaximos;
-    }
-
-    public List<String> getEstudiantesInscritos() {
-        return estudiantesInscritos;
-    }
-
-    // Méthod para inscribir a un estudiante
-    public void inscribirEstudiante(String rutEstudiante) {
-        if (this.cuposDisponibles > 0) {
-            this.estudiantesInscritos.add(rutEstudiante);
-            this.cuposDisponibles--;
-        }
     }
 
     @Override
