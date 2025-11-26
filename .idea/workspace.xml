@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="Modificacion a las Ventanas e implementancion de los controladores">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorInscripcion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorLogin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controlador/ControladorPrincipalEstudiante.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/modelo/DesinscribirAsignatura.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaInscripcion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaLogin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vista/VentanaPrincipalEstudiante.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/launcher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/launcher/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Asignatura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/SistemaInscripcion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/UtilidadesJSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/UtilidadesJSON.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/datos.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/datos.json" afterDir="false" />
-    </list>
+    <list default="true" id="e5d3da8c-12f7-40d6-a82f-a244a5b94873" name="Changes" comment="Modificacion a las Ventanas e implementancion de los controladores" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,16 +34,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.PruebasUnitarias.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "rama-jpbasso",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/jpbasso/Ruleta"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PruebasUnitarias.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;rama-jpbasso&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jpbasso/Ruleta&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="PruebasUnitarias" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="siae-project" />
