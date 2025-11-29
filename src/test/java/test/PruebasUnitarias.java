@@ -163,4 +163,36 @@ class SistemaInscripcionTest {
         Assertions.assertTrue(resultado.startsWith("Error: Ya tienes 3 asignaturas inscritas"), "La inscripción debe fallar por el límite total de 3 asignaturas.");
         Assertions.assertEquals(3, estudiantePrueba1.getAsignaturasInscritas().size(), "El estudiante solo debe tener 3 asignaturas inscritas.");
     }
+
+    @Test
+    public void testNoInscribirDuplicado() {
+        // 1. Inscribir una vez
+        sistema.inscribirAsignatura(estudiantePrueba1, "ART101");
+
+        // 2. Intentar inscribir la misma de nuevo
+        String resultado = sistema.inscribirAsignatura(estudiantePrueba1, "ART101");
+
+        // 3. Validar que falle
+        Assertions.assertTrue(resultado.startsWith("Error"), "No debería permitir duplicados");
+        Assertions.assertEquals(1, estudiantePrueba1.getAsignaturasInscritas().size(), "La lista no debe crecer");
+    }
+
+    @Test
+    public void testDesinscripcionRestauraCupo() {
+        // Preparación
+        Asignatura asig = sistema.buscarAsignaturaPorCodigo("ART101");
+        int cuposIniciales = asig.getCuposDisponibles();
+
+        // 1. Inscribir
+        sistema.inscribirAsignatura(estudiantePrueba1, "ART101");
+        Assertions.assertEquals(cuposIniciales - 1, asig.getCuposDisponibles());
+
+        // 2. Desinscribir
+        String resultado = sistema.desinscribirAsignatura(estudiantePrueba1, "ART101");
+
+        // 3. Validaciones
+        Assertions.assertTrue(resultado.contains("exito"));
+        Assertions.assertFalse(estudiantePrueba1.getAsignaturasInscritas().contains("ART101"), "La asignatura debe borrarse del alumno");
+        Assertions.assertEquals(cuposIniciales, asig.getCuposDisponibles(), "El cupo debe haber sido devuelto a la asignatura");
+    }
 }
