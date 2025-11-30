@@ -1,9 +1,5 @@
-package test; // Asume que tus pruebas están en el paquete 'test'
+package modelo; // Asume que tus pruebas están en el paquete 'test'
 
-import modelo.Asignatura;
-import modelo.Estudiante;
-import modelo.RepositorioDatos; // CLAVE: Necesitamos el Repositorio
-import modelo.SistemaInscripcion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
