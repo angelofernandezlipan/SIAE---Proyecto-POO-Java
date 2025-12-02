@@ -14,7 +14,6 @@ class AsignaturaTest {
     @BeforeEach
     void setUp() {
         // Inicializamos una asignatura fresca antes de cada prueba
-        // Codigo: MAT-101, Nombre: Matemáticas, Sección: 1, Max: 30, Disponibles: 10
         asignatura = new Asignatura("MAT-101", "Matemáticas", "1", CUPOS_MAXIMOS, CUPOS_INICIALES);
     }
 
