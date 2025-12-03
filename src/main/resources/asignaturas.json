@@ -5,21 +5,21 @@
       "nombre": "Historia del Arte",
       "seccion": "ARTISTICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 43
+      "cuposDisponibles": 44
     },
     {
       "codigo": "HUM202",
       "nombre": "Filosofia y Etica",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45
+      "cuposDisponibles": 44
     },
     {
       "codigo": "CIE303",
       "nombre": "Biologia Avanzada",
       "seccion": "MATEMATICO_CIENTIFICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 45
+      "cuposDisponibles": 44
     },
     {
       "codigo": "ART404",
@@ -32,13 +32,6 @@
       "codigo": "HUM505",
       "nombre": "Literatura Universal",
       "seccion": "HUMANISTA",
-      "cuposMaximos": 45,
-      "cuposDisponibles": 44
-    },
-    {
-      "codigo": "CIE606",
-      "nombre": "Fisica Moderna",
-      "seccion": "MATEMATICO_CIENTIFICO",
       "cuposMaximos": 45,
       "cuposDisponibles": 45
     },

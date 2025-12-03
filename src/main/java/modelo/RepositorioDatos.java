@@ -4,16 +4,42 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import util.UtilidadesJSON;
 
-// Se definen dos rutas de archivos.
+import java.util.List;
+
 public class RepositorioDatos {
-    private static final String FILE_DATOS_VOLATILES = "src/main/resources/datos_volatiles.json";
-    private static final String FILE_ASIGNATURAS_ESTATICAS = "src/main/resources/asignaturas.json";
+
+    // 1. YA NO SON 'static final'. Ahora son variables que pueden cambiar.
+    private final String rutaEstudiantes;
+    private final String rutaAsignaturas;
+
+    /**
+     * Constructor por defecto (PRODUCCIÓN).
+     * Este es el que usa tu App normal (Main.java).
+     * Apunta a los archivos reales.
+     */
+    public RepositorioDatos() {
+        this.rutaEstudiantes = "src/main/resources/datos_volatiles.json";
+        this.rutaAsignaturas = "src/main/resources/asignaturas.json";
+    }
+
+    /**
+     * Constructor para PRUEBAS (TEST).
+     * @param modoTest Si es true, usa un archivo temporal para no borrar los datos.
+     */
+    public RepositorioDatos(boolean modoTest) {
+        if (modoTest) {
+            this.rutaEstudiantes = "src/main/resources/datos_volatiles_test.json";
+            this.rutaAsignaturas = "src/main/resources/asignaturas.json";
+        } else {
+            this.rutaEstudiantes = "src/main/resources/datos_volatiles.json";
+            this.rutaAsignaturas = "src/main/resources/asignaturas.json";
+        }
+    }
 
     // --- Métodos de Archivo de Asignaturas (Estático) ---
 
-    /** Carga solo la información de Asignaturas desde su archivo dedicado. */
     public JsonObject cargarAsignaturas() {
-        JsonObject datos = UtilidadesJSON.leerJSON(FILE_ASIGNATURAS_ESTATICAS);
+        JsonObject datos = UtilidadesJSON.leerJSON(this.rutaAsignaturas);
         if (datos == null) {
             datos = new JsonObject();
             datos.add("asignaturas", new JsonArray());
@@ -21,18 +47,16 @@ public class RepositorioDatos {
         return datos;
     }
 
-    /** Guarda el estado (cupos y listas de inscritos) de las asignaturas. */
-    public void guardarAsignaturas(java.util.List<Asignatura> asignaturas) {
+    public void guardarAsignaturas(List<Asignatura> asignaturas) {
         JsonObject datos = new JsonObject();
         datos.add("asignaturas", UtilidadesJSON.listToJsonArray(asignaturas));
-        UtilidadesJSON.escribirJSON(FILE_ASIGNATURAS_ESTATICAS, datos);
+        UtilidadesJSON.escribirJSON(this.rutaAsignaturas, datos);
     }
 
     // --- Métodos de Archivo de Datos Volátiles (Estudiantes) ---
 
-    /** Carga solo la información volátil (Estudiantes) desde su archivo. */
     public JsonObject cargarEstudiantes() {
-        JsonObject datos = UtilidadesJSON.leerJSON(FILE_DATOS_VOLATILES);
+        JsonObject datos = UtilidadesJSON.leerJSON(this.rutaEstudiantes);
         if (datos == null) {
             datos = new JsonObject();
             datos.add("estudiantes", new JsonArray());
@@ -40,18 +64,16 @@ public class RepositorioDatos {
         return datos;
     }
 
-    /** Guarda solo la lista de Estudiantes (incluyendo credenciales). */
-    public void guardarEstudiantes(java.util.List<Estudiante> estudiantes) {
+    public void guardarEstudiantes(List<Estudiante> estudiantes) {
         JsonObject datos = new JsonObject();
         datos.add("estudiantes", UtilidadesJSON.listToJsonArray(estudiantes));
-        UtilidadesJSON.escribirJSON(FILE_DATOS_VOLATILES, datos);
+        UtilidadesJSON.escribirJSON(this.rutaEstudiantes, datos);
     }
 
-    /** Limpia los datos de estudiantes (el archivo volátil). */
     public void limpiarEstudiantes() {
         JsonObject datosVacios = new JsonObject();
         datosVacios.add("estudiantes", new JsonArray());
-        UtilidadesJSON.escribirJSON(FILE_DATOS_VOLATILES, datosVacios);
-        System.out.println("🚨 ATENCIÓN: Datos de estudiantes (volátiles) eliminados.");
+        UtilidadesJSON.escribirJSON(this.rutaEstudiantes, datosVacios);
+        System.out.println("🚨 ATENCIÓN: Datos de estudiantes eliminados en: " + this.rutaEstudiantes);
     }
 }
