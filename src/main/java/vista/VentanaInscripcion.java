@@ -4,160 +4,245 @@ import controlador.ControladorInscripcion;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.List;
 
+/**
+ * Vista encargada de la gestión de inscripción y anulación de asignaturas.
+ * Implementa una interfaz gráfica basada en listas interactivas con renderizado personalizado.
+ */
 public class VentanaInscripcion extends JFrame {
 
     private final ControladorInscripcion controlador;
 
-    // Modelos y componentes de lista para asignaturas disponibles e inscritas
+    // Componentes de lista y modelos de datos
     private final DefaultListModel<String> modeloDisponibles;
     private final JList<String> listaDisponibles;
-
     private final DefaultListModel<String> modeloInscritas;
     private final JList<String> listaInscritas;
 
-    // Etiqueta para feedback al usuario
+    // Etiqueta para retroalimentación de operaciones
     private final JLabel mensajeResultado;
 
+    // Constantes de color para la interfaz gráfica (UI)
+    private final Color COLOR_FONDO = new Color(230, 240, 250);
+    private final Color COLOR_PRIMARIO = new Color(70, 130, 180);
+    private final Color COLOR_VERDE = new Color(40, 167, 69);
+    private final Color COLOR_ROJO = new Color(220, 53, 69);
+    private final Color COLOR_BLANCO = Color.WHITE;
+    private final Color COLOR_HOVER = new Color(245, 247, 250);
+
+    /**
+     * Constructor que inicializa la ventana, sus componentes y los manejadores de eventos.
+     * @param controlador Instancia del controlador de inscripción.
+     */
     public VentanaInscripcion(ControladorInscripcion controlador) {
         this.controlador = controlador;
         this.controlador.setVista(this);
 
-        // Configuración inicial de la ventana principal
-        setTitle("Gestión de Asignaturas de " + controlador.getNombreEstudiante());
+        // Configuración general del JFrame
+        setTitle("SIAE - Gestión de Asignaturas");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(1100, 700);
+        setSize(1100, 750);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(new Color(240, 240, 245));
+        setLayout(new BorderLayout(0, 0));
+        getContentPane().setBackground(COLOR_FONDO);
 
-        // Configuración del panel superior (Título)
-        JPanel panelSuperior = new JPanel();
-        panelSuperior.setBackground(new Color(70, 130, 180));
-        JLabel titulo = new JLabel("Inscripción de Asignaturas");
-        titulo.setForeground(Color.WHITE);
-        titulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titulo.setBorder(new EmptyBorder(10, 0, 10, 0));
-        panelSuperior.add(titulo);
+        // --- Configuración del Panel Superior (Header) ---
+        JPanel panelSuperior = new JPanel(new BorderLayout());
+        panelSuperior.setBackground(COLOR_PRIMARIO);
+        panelSuperior.setBorder(new EmptyBorder(15, 20, 15, 20));
+
+        JLabel lblTitulo = new JLabel("Inscripción Académica");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        lblTitulo.setForeground(COLOR_BLANCO);
+
+        JLabel lblSubtitulo = new JLabel("Estudiante: " + controlador.getNombreEstudiante());
+        lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSubtitulo.setForeground(new Color(220, 220, 220));
+
+        panelSuperior.add(lblTitulo, BorderLayout.WEST);
+        panelSuperior.add(lblSubtitulo, BorderLayout.EAST);
         add(panelSuperior, BorderLayout.NORTH);
 
-        // Configuración del panel central (Listas de asignaturas)
-        JPanel panelCentral = new JPanel(new GridLayout(1, 2, 15, 0));
-        panelCentral.setBackground(new Color(240, 240, 245));
-        panelCentral.setBorder(new EmptyBorder(10, 15, 10, 15));
+        // --- Configuración del Panel Central (Listas) ---
+        JPanel panelCentral = new JPanel(new GridLayout(1, 2, 20, 0));
+        panelCentral.setBackground(COLOR_FONDO);
+        panelCentral.setBorder(new EmptyBorder(20, 20, 10, 20));
 
-        // Inicialización de la lista de disponibles con renderizado personalizado
+        // Inicialización de modelos y listas
         modeloDisponibles = new DefaultListModel<>();
         listaDisponibles = new JList<>(modeloDisponibles);
         configurarListaVisual(listaDisponibles);
 
-        // Inicialización de la lista de inscritas con renderizado personalizado
         modeloInscritas = new DefaultListModel<>();
         listaInscritas = new JList<>(modeloInscritas);
         configurarListaVisual(listaInscritas);
 
-        // Adición de las listas al panel central dentro de paneles con desplazamiento
-        panelCentral.add(crearPanelListado("Asignaturas Disponibles", listaDisponibles));
-        panelCentral.add(crearPanelListado("Tus Asignaturas Inscritas", listaInscritas));
+        // Adición de listas al panel central
+        panelCentral.add(crearPanelColumna("Oferta Académica (Disponibles)", listaDisponibles));
+        panelCentral.add(crearPanelColumna("Mi Carga Académica (Inscritas)", listaInscritas));
 
         add(panelCentral, BorderLayout.CENTER);
 
-        // Configuración del panel inferior (Botones y Mensajes)
+        // --- Configuración del Panel Inferior (Acciones) ---
         JPanel panelInferior = new JPanel(new BorderLayout(10, 10));
-        panelInferior.setBackground(new Color(240, 240, 245));
-        panelInferior.setBorder(new EmptyBorder(0, 20, 20, 20));
+        panelInferior.setBackground(COLOR_FONDO);
+        panelInferior.setBorder(new EmptyBorder(10, 20, 20, 20));
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
-        panelBotones.setOpaque(false);
+        panelBotones.setBackground(COLOR_FONDO);
 
-        // Creación de botones de acción
-        JButton btnInscribir = crearBotonEstilizado("Inscribir Asignatura", new Color(34, 139, 34));
-        JButton btnDesinscribir = crearBotonEstilizado("Desinscribir Asignatura", new Color(178, 34, 34));
-        JButton btnVolver = crearBotonEstilizado("Volver", Color.GRAY);
+        JButton btnInscribir = crearBotonEstilizado("Inscribir Asignatura", COLOR_VERDE);
+        JButton btnDesinscribir = crearBotonEstilizado("Desinscribir Asignatura", COLOR_ROJO);
+        JButton btnVolver = crearBotonEstilizado("Volver al Menú", Color.GRAY);
 
         panelBotones.add(btnInscribir);
         panelBotones.add(btnDesinscribir);
         panelBotones.add(btnVolver);
 
-        mensajeResultado = new JLabel("Seleccione una asignatura para comenzar.", SwingConstants.CENTER);
+        mensajeResultado = new JLabel("Seleccione una asignatura para realizar una acción.", SwingConstants.CENTER);
         mensajeResultado.setFont(new Font("Segoe UI", Font.BOLD, 14));
         mensajeResultado.setForeground(Color.DARK_GRAY);
-        mensajeResultado.setBorder(new EmptyBorder(10, 0, 10, 0));
+        mensajeResultado.setBorder(new EmptyBorder(0, 0, 15, 0));
 
         panelInferior.add(mensajeResultado, BorderLayout.NORTH);
         panelInferior.add(panelBotones, BorderLayout.CENTER);
         add(panelInferior, BorderLayout.SOUTH);
 
-        // Listener para el botón de inscripción
+        // --- Asignación de Listeners (Control de Eventos) ---
+
+        // Evento Inscribir
         btnInscribir.addActionListener(e -> {
             String seleccion = listaDisponibles.getSelectedValue();
             if (seleccion == null) {
-                mostrarResultado("⚠️ Seleccione una asignatura de la izquierda primero.");
+                mostrarResultado("⚠️ Debe seleccionar una asignatura de la oferta académica.");
                 return;
             }
             controlador.intentarInscribir(extraerCodigo(seleccion));
         });
 
-        // Listener para el botón de desinscripción
+        // Evento Desinscribir
         btnDesinscribir.addActionListener(e -> {
             String seleccion = listaInscritas.getSelectedValue();
             if (seleccion == null) {
-                mostrarResultado("⚠️ Seleccione una asignatura de la derecha primero.");
+                mostrarResultado("⚠️ Debe seleccionar una asignatura inscrita para eliminarla.");
                 return;
             }
             controlador.intentarDesinscribir(extraerCodigo(seleccion));
         });
 
-        // Listener para cerrar la ventana
+        // Evento Cerrar
         btnVolver.addActionListener(e -> dispose());
 
-        // Carga inicial de datos en las listas
+        // Carga inicial de datos
         actualizarListas();
         setVisible(true);
     }
 
-    // Métodos de configuración visual
+    // --- Métodos de Configuración Visual ---
 
     /**
-     * Aplica la configuración visual y el renderizador personalizado a la lista proporcionada.
+     * Aplica el renderizador personalizado y los listeners de movimiento del mouse
+     * para efectos visuales (hover) en la lista.
+     * @param lista Componente JList a configurar.
      */
     private void configurarListaVisual(JList<String> lista) {
         lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lista.setBackground(new Color(240, 240, 245));
-        lista.setCellRenderer(new TarjetaAsignaturaRenderer());
+        lista.setBackground(COLOR_FONDO);
+
+        // Instancia del renderizador para controlar el estado hover
+        TarjetaAsignaturaRenderer renderer = new TarjetaAsignaturaRenderer();
+        lista.setCellRenderer(renderer);
+
+        // Listener para detectar movimiento del mouse sobre los elementos
+        lista.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                int index = lista.locationToIndex(e.getPoint());
+
+                // Valida si el cursor está dentro de los límites de la celda
+                if (index != -1 && lista.getCellBounds(index, index).contains(e.getPoint())) {
+                    if (renderer.getHoveredIndex() != index) {
+                        renderer.setHoveredIndex(index);
+                        lista.repaint(); // Fuerza repintado para actualizar color
+                    }
+                } else {
+                    if (renderer.getHoveredIndex() != -1) {
+                        renderer.setHoveredIndex(-1);
+                        lista.repaint();
+                    }
+                }
+            }
+        });
+
+        // Listener para limpiar estado hover al salir del componente
+        lista.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                renderer.setHoveredIndex(-1);
+                lista.repaint();
+            }
+        });
     }
 
     /**
-     * Crea un JScrollPane con título y borde para contener la lista.
+     * Crea un panel contenedor con ScrollPane para las listas.
      */
-    private JScrollPane crearPanelListado(String titulo, JList<String> lista) {
-        JScrollPane scrollPane = new JScrollPane(lista);
-        scrollPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.GRAY), titulo));
-        scrollPane.getViewport().setBackground(new Color(240, 240, 245));
-        return scrollPane;
+    private JPanel crearPanelColumna(String titulo, JList<String> lista) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(COLOR_FONDO);
+
+        JLabel labelTitulo = new JLabel(titulo);
+        labelTitulo.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        labelTitulo.setForeground(new Color(60, 60, 60));
+        labelTitulo.setBorder(new EmptyBorder(0, 0, 10, 0));
+        panel.add(labelTitulo, BorderLayout.NORTH);
+
+        JScrollPane scroll = new JScrollPane(lista);
+        scroll.setBorder(new LineBorder(new Color(200, 200, 200)));
+        scroll.getViewport().setBackground(Color.WHITE);
+        panel.add(scroll, BorderLayout.CENTER);
+
+        return panel;
     }
 
     /**
-     * Genera un botón con estilo estandarizado (fuente, color, tamaño).
+     * Genera un botón con estilos predefinidos y efecto de oscurecimiento al pasar el mouse.
      */
-    private JButton crearBotonEstilizado(String texto, Color colorFondo) {
+    private JButton crearBotonEstilizado(String texto, Color colorBase) {
         JButton btn = new JButton(texto);
         btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.setBackground(colorFondo);
+        btn.setBackground(colorBase);
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
-        btn.setPreferredSize(new Dimension(200, 40));
+        btn.setBorderPainted(false);
+        btn.setPreferredSize(new Dimension(200, 45));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btn.setBackground(colorBase.darker());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btn.setBackground(colorBase);
+            }
+        });
         return btn;
     }
 
-    // Lógica de negocio auxiliar
+    // --- Métodos de Lógica Auxiliar ---
 
     /**
-     * Extrae el código de la asignatura desde la cadena de texto formateada.
-     * Identifica patrones específicos como "Código: XXX" o toma la primera palabra.
+     * Analiza una cadena de texto para extraer el código de asignatura.
+     * Soporta formato detallado ("Código: XXX, ...") o formato simple (primera palabra).
      */
     private String extraerCodigo(String textoLinea) {
         if (textoLinea.startsWith("Código:")) {
@@ -168,14 +253,14 @@ public class VentanaInscripcion extends JFrame {
     }
 
     /**
-     * Solicita al controlador la información actualizada y refresca los modelos de lista.
+     * Solicita al controlador la información actual y refresca los modelos de datos de las listas.
      */
     public void actualizarListas() {
         // Actualización de lista de disponibles
         List<String> disponibles = controlador.obtenerAsignaturasDisponiblesInfo();
         modeloDisponibles.clear();
         if (disponibles.isEmpty()) {
-            modeloDisponibles.addElement("No hay asignaturas disponibles.");
+            modeloDisponibles.addElement("Sin asignaturas disponibles.");
             listaDisponibles.setEnabled(false);
         } else {
             listaDisponibles.setEnabled(true);
@@ -186,7 +271,7 @@ public class VentanaInscripcion extends JFrame {
         List<String> inscritas = controlador.obtenerInscripcionesEstudiante();
         modeloInscritas.clear();
         if (inscritas.isEmpty()) {
-            modeloInscritas.addElement("No tienes inscripciones.");
+            modeloInscritas.addElement("Sin inscripciones activas.");
             listaInscritas.setEnabled(false);
         } else {
             listaInscritas.setEnabled(true);
@@ -195,63 +280,92 @@ public class VentanaInscripcion extends JFrame {
     }
 
     /**
-     * Actualiza la etiqueta de estado con el mensaje proporcionado.
+     * Actualiza la etiqueta de mensaje en la interfaz.
      * Cambia el color del texto según si el mensaje indica error o éxito.
      */
     public void mostrarResultado(String mensaje) {
         mensajeResultado.setText(mensaje);
-        mensajeResultado.setForeground((mensaje.startsWith("Error") || mensaje.startsWith("⚠️")) ? Color.RED : new Color(0, 100, 0));
+        boolean esError = mensaje.startsWith("Error") || mensaje.startsWith("⚠️");
+        mensajeResultado.setForeground(esError ? COLOR_ROJO : new Color(40, 167, 69));
     }
 
-    // Clase interna para renderizado personalizado de celdas (Diseño de Tarjeta)
-    static class TarjetaAsignaturaRenderer extends JPanel implements ListCellRenderer<String> {
+    // --- Clase Interna: Renderizador Personalizado ---
+
+    /**
+     * Renderizador de celdas para JList. Dibuja cada elemento como una tarjeta (JPanel)
+     * y gestiona cambios de color para selección y hover.
+     */
+    class TarjetaAsignaturaRenderer extends JPanel implements ListCellRenderer<String> {
+        private final JLabel lbIcono = new JLabel();
         private final JLabel lbTexto = new JLabel();
-        private final JLabel lbIcono = new JLabel("📚");
+
+        // Variable para almacenar el índice sobre el que se encuentra el mouse
+        private int hoveredIndex = -1;
 
         public TarjetaAsignaturaRenderer() {
-            setLayout(new BorderLayout(10, 0));
-            setBorder(new EmptyBorder(5, 5, 5, 5));
-            setOpaque(false);
+            setLayout(new BorderLayout(15, 0));
+            setBorder(new EmptyBorder(8, 10, 8, 10));
+            setOpaque(true);
 
-            // Configuración del panel interno que simula la tarjeta
-            JPanel tarjeta = new JPanel(new BorderLayout(10, 5));
-            tarjeta.setBackground(Color.WHITE);
-            tarjeta.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
-                    new EmptyBorder(10, 10, 10, 10)
-            ));
+            lbIcono.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 24));
+            lbTexto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
-            lbTexto.setFont(new Font("Monospaced", Font.BOLD, 12));
-            lbIcono.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+            add(lbIcono, BorderLayout.WEST);
+            add(lbTexto, BorderLayout.CENTER);
+        }
 
-            tarjeta.add(lbIcono, BorderLayout.WEST);
-            tarjeta.add(lbTexto, BorderLayout.CENTER);
+        public void setHoveredIndex(int index) {
+            this.hoveredIndex = index;
+        }
 
-            add(tarjeta, BorderLayout.CENTER);
+        public int getHoveredIndex() {
+            return hoveredIndex;
         }
 
         @Override
         public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
-            lbTexto.setText(value);
 
-            // Obtención del componente tarjeta (hijo 0 del panel contenedor)
-            JPanel tarjeta = (JPanel) getComponent(0);
+            // Configuración del contenido de texto (soporte básico HTML para salto de línea)
+            lbTexto.setText("<html>" + value.replace("\n", "<br>") + "</html>");
 
-            // Modificación visual basada en el estado de selección
-            if (isSelected) {
-                tarjeta.setBackground(new Color(220, 235, 255));
-                tarjeta.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(new Color(70, 130, 180), 2),
-                        new EmptyBorder(9, 9, 9, 9)
-                ));
+            // Asignación de icono según contenido
+            if (value.contains("Sin asignaturas") || value.contains("Sin inscripciones")) {
+                lbIcono.setText("ℹ️");
             } else {
-                tarjeta.setBackground(Color.WHITE);
-                tarjeta.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
-                        new EmptyBorder(10, 10, 10, 10)
-                ));
+                lbIcono.setText("📘");
             }
 
+            // --- Gestión de Estados Visuales ---
+
+            if (isSelected) {
+                // Estado: Seleccionado
+                setBackground(new Color(220, 235, 255));
+                setBorder(BorderFactory.createCompoundBorder(
+                        new EmptyBorder(2, 5, 2, 5),
+                        BorderFactory.createLineBorder(COLOR_PRIMARIO, 1)
+                ));
+                lbTexto.setForeground(COLOR_PRIMARIO);
+
+            } else if (index == hoveredIndex) {
+                // Estado: Hover (Mouse encima)
+                setBackground(COLOR_HOVER);
+                setBorder(BorderFactory.createCompoundBorder(
+                        new EmptyBorder(2, 5, 2, 5),
+                        BorderFactory.createLineBorder(new Color(180, 180, 180), 1)
+                ));
+                lbTexto.setForeground(Color.BLACK);
+
+            } else {
+                // Estado: Normal
+                setBackground(Color.WHITE);
+                setBorder(BorderFactory.createCompoundBorder(
+                        new EmptyBorder(2, 5, 2, 5),
+                        BorderFactory.createLineBorder(new Color(230, 230, 230), 1)
+                ));
+                lbTexto.setForeground(Color.DARK_GRAY);
+            }
+
+            setPreferredSize(new Dimension(0, 60));
             return this;
         }
     }
