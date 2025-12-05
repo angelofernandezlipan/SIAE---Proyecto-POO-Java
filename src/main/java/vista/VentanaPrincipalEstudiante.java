@@ -8,17 +8,19 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Vista principal del módulo de Estudiante (Dashboard).
- * Diseño corregido: Eliminación de iconos incompatibles (emojis) por texto limpio.
+ * Actualización: Manejo de cierre de ventana ("X") y botones de diálogo en español.
  */
 public class VentanaPrincipalEstudiante {
 
     private final ControladorPrincipalEstudiante controlador;
     private final JFrame menuEstudiantes;
 
-    // Constantes de color (Paleta unificada SIAE)
+    // Constantes de color
     private final Color COLOR_FONDO = new Color(230, 240, 250);
     private final Color COLOR_PRIMARIO = new Color(70, 130, 180);
     private final Color COLOR_PRIMARIO_HOVER = new Color(60, 110, 160);
@@ -32,13 +34,26 @@ public class VentanaPrincipalEstudiante {
 
         // Configuración de la ventana principal
         menuEstudiantes = new JFrame("SIAE - Portal del Estudiante");
-        menuEstudiantes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // CAMBIO: Evita que la ventana se cierre automáticamente al presionar "X"
+        // para delegar la validación al controlador.
+        menuEstudiantes.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
         menuEstudiantes.setSize(1000, 600);
         menuEstudiantes.setLocationRelativeTo(null);
         menuEstudiantes.setLayout(new BorderLayout());
         menuEstudiantes.getContentPane().setBackground(COLOR_FONDO);
 
-        // --- 1. ENCABEZADO (Header Azul) ---
+        // Listener para capturar el clic en la "X"
+        menuEstudiantes.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Ejecuta la misma lógica de validación que el botón "Cerrar Sesión"
+                controlador.manejarLogout();
+            }
+        });
+
+        // --- 1. ENCABEZADO ---
         JPanel panelSuperior = new JPanel(new BorderLayout());
         panelSuperior.setBackground(COLOR_PRIMARIO);
         panelSuperior.setBorder(new EmptyBorder(15, 20, 15, 20));
@@ -49,27 +64,24 @@ public class VentanaPrincipalEstudiante {
 
         JLabel lblUsuario = new JLabel("Usuario: " + nombreEstudiante);
         lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblUsuario.setForeground(new Color(230, 230, 230)); // Blanco suave
+        lblUsuario.setForeground(new Color(230, 230, 230));
 
         panelSuperior.add(lblTitulo, BorderLayout.WEST);
         panelSuperior.add(lblUsuario, BorderLayout.EAST);
         menuEstudiantes.add(panelSuperior, BorderLayout.NORTH);
 
-        // --- 2. PANEL CENTRAL (Tarjeta de Menú) ---
-        JPanel panelCentral = new JPanel(new GridBagLayout()); // Centrado absoluto
+        // --- 2. PANEL CENTRAL ---
+        JPanel panelCentral = new JPanel(new GridBagLayout());
         panelCentral.setBackground(COLOR_FONDO);
 
-        // Tarjeta blanca contenedora
         JPanel tarjetaMenu = new JPanel();
         tarjetaMenu.setLayout(new BoxLayout(tarjetaMenu, BoxLayout.Y_AXIS));
         tarjetaMenu.setBackground(COLOR_BLANCO);
-        // Borde sutil gris en lugar de sombra compleja
         tarjetaMenu.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(new Color(200, 200, 200), 1),
                 new EmptyBorder(40, 50, 40, 50)
         ));
 
-        // Título de la tarjeta
         JLabel lblInstruccion = new JLabel("Menú Principal");
         lblInstruccion.setFont(new Font("Segoe UI", Font.BOLD, 20));
         lblInstruccion.setForeground(new Color(60, 60, 60));
@@ -83,20 +95,18 @@ public class VentanaPrincipalEstudiante {
         tarjetaMenu.add(lblInstruccion);
         tarjetaMenu.add(Box.createVerticalStrut(5));
         tarjetaMenu.add(lblSub);
-        tarjetaMenu.add(Box.createVerticalStrut(30)); // Separador
+        tarjetaMenu.add(Box.createVerticalStrut(30));
 
-        // BOTÓN PRINCIPAL: Gestión de Asignaturas
         JButton btnInscribir = crearBotonMenu("Gestión de Asignaturas (Inscribir / Ver)");
         btnInscribir.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnInscribir.addActionListener(e -> controlador.manejarAperturaInscripcion());
 
         tarjetaMenu.add(btnInscribir);
 
-        // Agregar la tarjeta al panel de fondo
         panelCentral.add(tarjetaMenu);
         menuEstudiantes.add(panelCentral, BorderLayout.CENTER);
 
-        // --- 3. PANEL INFERIOR (Botón Salir) ---
+        // --- 3. PANEL INFERIOR ---
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 20));
         panelInferior.setBackground(COLOR_FONDO);
 
@@ -109,7 +119,7 @@ public class VentanaPrincipalEstudiante {
         menuEstudiantes.setVisible(true);
     }
 
-    // --- MÉTODOS DE ESTILO (UI) ---
+    // --- MÉTODOS DE ESTILO ---
 
     private JButton crearBotonMenu(String texto) {
         JButton btn = new JButton(texto);
@@ -118,23 +128,15 @@ public class VentanaPrincipalEstudiante {
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
-
-        // Dimensiones fijas para que se vea robusto
         btn.setPreferredSize(new Dimension(350, 55));
         btn.setMaximumSize(new Dimension(350, 55));
-
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Efecto Hover simple
         btn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                btn.setBackground(COLOR_PRIMARIO_HOVER);
-            }
+            public void mouseEntered(MouseEvent e) { btn.setBackground(COLOR_PRIMARIO_HOVER); }
             @Override
-            public void mouseExited(MouseEvent e) {
-                btn.setBackground(COLOR_PRIMARIO);
-            }
+            public void mouseExited(MouseEvent e) { btn.setBackground(COLOR_PRIMARIO); }
         });
         return btn;
     }
@@ -151,18 +153,39 @@ public class VentanaPrincipalEstudiante {
 
         btn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                btn.setBackground(COLOR_ROJO.darker());
-            }
+            public void mouseEntered(MouseEvent e) { btn.setBackground(COLOR_ROJO.darker()); }
             @Override
-            public void mouseExited(MouseEvent e) {
-                btn.setBackground(COLOR_ROJO);
-            }
+            public void mouseExited(MouseEvent e) { btn.setBackground(COLOR_ROJO); }
         });
         return btn;
     }
 
     public void cerrar() {
         menuEstudiantes.dispose();
+    }
+
+    /**
+     * Muestra una ventana de confirmación personalizada.
+     * Utiliza showOptionDialog para personalizar el texto de los botones.
+     * @param mensaje El texto de advertencia.
+     * @return true si el usuario selecciona "Sí", false si selecciona "No".
+     */
+    public boolean mostrarAdvertenciaLogout(String mensaje) {
+        // Definición de textos personalizados para los botones
+        Object[] opciones = {"Sí, cerrar sesión", "No, cancelar"};
+
+        int respuesta = JOptionPane.showOptionDialog(
+                menuEstudiantes,
+                mensaje + "\n\n¿Estás seguro de que deseas cerrar sesión?",
+                "Advertencia de Inscripción",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,           // Icono por defecto
+                opciones,       // Botones personalizados
+                opciones[1]     // Selección por defecto (No)
+        );
+
+        // Si respuesta es 0, significa que presionó el primer botón ("Sí")
+        return respuesta == 0;
     }
 }
