@@ -13,22 +13,32 @@ public class GestionAdministrativa {
         this.sistema = sistema;
     }
 
-    // Genera una contraseña simple (ej: "pass123")
     private String generarContrasenaSimple() {
         return "pass" + (new Random().nextInt(900) + 100);
     }
 
-    // Carga masiva de estudiantes (se mantiene igual)
     public List<String> cargarListaCursos(String filePath) {
         List<String> errores = new ArrayList<>();
-        List<String> lineas = UtilidadesArchivo.leerArchivo(filePath);
-        List<String> listaExportar = new ArrayList<>();
 
-        if (lineas == null || lineas.isEmpty()) {
-            errores.add("Error: El archivo está vacío o no existe.");
+        String lowerCasePath = filePath.toLowerCase();
+        if (!lowerCasePath.endsWith(".csv") && !lowerCasePath.endsWith(".txt")) {
+            errores.add("Error: El archivo debe ser un CSV o un TXT.");
             return errores;
         }
 
+        List<String> lineas = UtilidadesArchivo.leerArchivo(filePath);
+
+        if (lineas == null) {
+            errores.add("Error: No se pudo leer el archivo. Verifique la ruta o los permisos de acceso.");
+            return errores;
+        }
+
+        if (lineas.isEmpty()) {
+            errores.add("Error: El archivo está vacío.");
+            return errores;
+        }
+
+        List<String> listaExportar = new ArrayList<>();
         listaExportar.add("RUT\tNOMBRE\tCURSO\tCONTRASEÑA");
 
         for (String linea : lineas) {
@@ -65,13 +75,12 @@ public class GestionAdministrativa {
         return errores;
     }
 
-    // Exporta reportes administrativos a archivos TXT y RETORNA el contenido
-    public List<String> exportarReportes(int tipoReporte) { // <-- FIRMA CORREGIDA: Ahora retorna List<String>
+    public List<String> exportarReportes(int tipoReporte) {
         List<String> reporte = new ArrayList<>();
         String filename = "";
 
         switch (tipoReporte) {
-            case 1: // Reporte de Cupos Disponibles
+            case 1:
                 filename = "reporte_cupos_asignaturas.txt";
                 reporte.add("--- REPORTE DE CUPOS DISPONIBLES ---");
                 reporte.add("CÓDIGO\tNOMBRE\tSECCIÓN\tCUPOS DISPONIBLES\tCUPOS MÁXIMOS");
@@ -82,7 +91,7 @@ public class GestionAdministrativa {
                 );
                 break;
 
-            case 2: // Reporte de Inscripciones por Estudiante y Curso
+            case 2:
                 filename = "reporte_inscripciones_estudiantes.txt";
                 reporte.add("--- REPORTE DE INSCRIPCIONES POR ESTUDIANTE ---");
                 reporte.add("RUT\tNOMBRE\tCURSO\tASIGNATURAS INSCRITAS");
@@ -95,12 +104,12 @@ public class GestionAdministrativa {
                 break;
             default:
                 reporte.add("Tipo de reporte inválido.");
-                return reporte; // Retorna el mensaje de error
+                return reporte;
         }
 
         if (!reporte.isEmpty()) {
-            UtilidadesArchivo.exportarArchivo(filename, reporte); // Exporta a TXT
+            UtilidadesArchivo.exportarArchivo(filename, reporte);
         }
-        return reporte; // <--- Retorna el contenido para la vista (PanelAdmin)
+        return reporte;
     }
 }

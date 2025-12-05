@@ -13,19 +13,13 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Panel central de administración (Dashboard).
- * Ajustes: Botones de Reportes más pequeños y centrados en su columna.
- */
 public class PanelAdmin extends JPanel {
 
     private final ControladorAdmin contAdmin;
 
-    // Componentes visuales
     private final JTextPane resultadosArea;
     private final JTextField campoRutaCarga;
 
-    // Paleta de Colores
     private final Color COLOR_FONDO = new Color(230, 240, 250);
     private final Color COLOR_PRIMARIO = new Color(70, 130, 180);
     private final Color COLOR_VERDE = new Color(40, 167, 69);
@@ -40,7 +34,6 @@ public class PanelAdmin extends JPanel {
         setBackground(COLOR_FONDO);
         setBorder(new EmptyBorder(0, 0, 0, 0));
 
-        // --- 1. HEADER ---
         JPanel panelHeader = new JPanel(new BorderLayout());
         panelHeader.setBackground(COLOR_PRIMARIO);
         panelHeader.setBorder(new EmptyBorder(15, 30, 15, 30));
@@ -57,12 +50,10 @@ public class PanelAdmin extends JPanel {
         panelHeader.add(btnLogout, BorderLayout.EAST);
         add(panelHeader, BorderLayout.NORTH);
 
-        // --- 2. CONTENIDO CENTRAL ---
         JPanel panelContenido = new JPanel(new GridLayout(1, 2, 40, 0));
         panelContenido.setBackground(COLOR_FONDO);
         panelContenido.setBorder(new EmptyBorder(40, 80, 40, 80));
 
-        // COLUMNA IZQUIERDA: Controles
         JPanel panelControles = new JPanel();
         panelControles.setLayout(new BoxLayout(panelControles, BoxLayout.Y_AXIS));
         panelControles.setOpaque(false);
@@ -73,7 +64,6 @@ public class PanelAdmin extends JPanel {
         panelControles.add(Box.createVerticalStrut(25));
         panelControles.add(crearSeccionMantenimiento());
 
-        // COLUMNA DERECHA: Registro de Actividad
         resultadosArea = new JTextPane();
         resultadosArea.setEditable(false);
         resultadosArea.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -100,13 +90,11 @@ public class PanelAdmin extends JPanel {
 
         add(panelContenido, BorderLayout.CENTER);
 
-        // Referencia auxiliar
         campoRutaCarga = new JTextField("estudiantes.csv");
 
         agregarLog("Sistema iniciado correctamente.", "INFO");
     }
 
-    // --- MÉTODOS DE INTERFAZ (UI) ---
 
     private JPanel crearSeccionCargaMasiva() {
         JPanel panel = crearPanelTarjeta("Carga Masiva de Estudiantes");
@@ -157,19 +145,15 @@ public class PanelAdmin extends JPanel {
     private JPanel crearSeccionReportes() {
         JPanel panel = crearPanelTarjeta("Reportes del Sistema");
 
-        // CAMBIO: Usamos FlowLayout CENTER para que los botones queden al medio
-        // del panel de la columna izquierda.
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
         panelBotones.setOpaque(false);
-        panelBotones.setAlignmentX(Component.LEFT_ALIGNMENT); // El panel contenedor se alinea a la izq
+        panelBotones.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JButton btnCupos = crearBotonAccion("Rep. Cupos", COLOR_PRIMARIO);
-        // CAMBIO: Tamaño reducido (110 ancho x 30 alto)
         btnCupos.setPreferredSize(new Dimension(110, 30));
         btnCupos.addActionListener(e -> generarReporte(1));
 
         JButton btnInscripciones = crearBotonAccion("Rep. Inscritos", COLOR_PRIMARIO);
-        // CAMBIO: Tamaño reducido
         btnInscripciones.setPreferredSize(new Dimension(110, 30));
         btnInscripciones.addActionListener(e -> generarReporte(2));
 
@@ -202,7 +186,6 @@ public class PanelAdmin extends JPanel {
         return panel;
     }
 
-    // --- MÉTODOS AUXILIARES UI ---
 
     private JPanel crearPanelTarjeta(String titulo) {
         JPanel panel = new JPanel();
@@ -243,7 +226,6 @@ public class PanelAdmin extends JPanel {
         return btn;
     }
 
-    // --- LÓGICA DE REGISTRO (LOGS) ---
 
     private void agregarLog(String mensaje, String tipo) {
         StyledDocument doc = resultadosArea.getStyledDocument();
@@ -281,7 +263,6 @@ public class PanelAdmin extends JPanel {
         }
     }
 
-    // --- LÓGICA DE NEGOCIO ---
 
     private void realizarCarga(String ruta) {
         if (ruta.isEmpty()) {
@@ -289,14 +270,19 @@ public class PanelAdmin extends JPanel {
             return;
         }
         agregarLog("Cargando: " + ruta + "...", "INFO");
-        java.util.List<String> errores = contAdmin.cargarEstudiantes(ruta);
+        java.util.List<String> mensajes = contAdmin.cargarEstudiantes(ruta);
 
-        if (errores.isEmpty()) {
-            agregarLog("Carga completada exitosamente.", "SUCCESS");
-            agregarLog("Genere reporte de credenciales.", "INFO");
+        boolean errorTotal = mensajes.stream().anyMatch(msg -> msg.startsWith("Error:"));
+
+        if (errorTotal) {
+            agregarLog("La carga masiva falló. Detalles:", "ERROR");
+            mensajes.forEach(msg -> agregarLog(msg, "ERROR"));
         } else {
-            agregarLog("Problemas detectados:", "ERROR");
-            errores.forEach(err -> agregarLog(err, "ERROR"));
+            agregarLog(mensajes.get(0), "SUCCESS");
+            if (mensajes.size() > 1) {
+                mensajes.subList(1, mensajes.size()).forEach(msg -> agregarLog(msg, "ERROR"));
+            }
+            agregarLog("Genere reporte de credenciales.", "INFO");
         }
     }
 
