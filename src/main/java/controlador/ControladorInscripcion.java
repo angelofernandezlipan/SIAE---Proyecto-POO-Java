@@ -1,5 +1,3 @@
-// Archivo: src/main/java/controlador/ControladorInscripcion.java (Corregido)
-
 package controlador;
 
 import modelo.Estudiante;
@@ -12,7 +10,7 @@ import java.util.stream.Collectors;
 public class ControladorInscripcion {
 
     private final SistemaInscripcion sistema;
-    private final Estudiante estudiante; // Atributo privado
+    private final Estudiante estudiante;
     private VentanaInscripcion vista;
 
     public ControladorInscripcion(SistemaInscripcion sistema, Estudiante estudiante) {
@@ -24,24 +22,22 @@ public class ControladorInscripcion {
         this.vista = vista;
     }
 
-    /**
-     * MÉTODO AÑADIDO: Permite a la Vista acceder al nombre del estudiante de forma segura.
-     */
     public String getNombreEstudiante() {
         return estudiante.getNombre();
     }
 
-    // ... (El resto de los métodos se mantienen) ...
+    // --- Lógica de Negocio ---
+
     public List<String> obtenerAsignaturasDisponiblesInfo() {
         return sistema.obtenerAsignaturasDisponibles().stream()
-                .map(asig -> asig.toString())
+                .map(Object::toString)
                 .collect(Collectors.toList());
     }
 
     public List<String> obtenerInscripcionesEstudiante() {
         return estudiante.getAsignaturasInscritas().stream()
                 .map(sistema::buscarAsignaturaPorCodigo)
-                .filter(asig -> asig != null)
+                .filter(java.util.Objects::nonNull)
                 .map(asig -> String.format("Código: %s, Nombre: %s, Sección: %s",
                         asig.getCodigo(), asig.getNombre(), asig.getSeccion()))
                 .collect(Collectors.toList());
@@ -54,9 +50,31 @@ public class ControladorInscripcion {
     }
 
     public void intentarDesinscribir(String codigoAsignatura) {
-        // Asumo que desinscribirAsignatura existe en SistemaInscripcion
         String resultado = sistema.desinscribirAsignatura(estudiante, codigoAsignatura);
         vista.mostrarResultado(resultado);
         vista.actualizarListas();
+    }
+
+    /**
+     * Gestiona el cierre de la ventana de inscripción.
+     * Verifica que el estudiante tenga al menos 3 asignaturas antes de cerrar.
+     */
+    public void manejarSalida() {
+        int cantidad = estudiante.getAsignaturasInscritas().size();
+
+        if (cantidad < 3) {
+            String mensaje = "⚠️ AVISO ACADÉMICO:\n" +
+                    "Solo tienes " + cantidad + " asignatura(s) inscrita(s).\n" +
+                    "Se recomienda inscribir al menos 3.";
+
+            // Pregunta al usuario si quiere salir igual
+            boolean salirIgual = vista.mostrarAdvertenciaSalida(mensaje);
+
+            if (salirIgual) {
+                vista.dispose(); // Cierra solo si confirma
+            }
+        } else {
+            vista.dispose(); // Cierra normal si cumple requisito
+        }
     }
 }

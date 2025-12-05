@@ -6,17 +6,21 @@ import vista.VentanaInscripcion;
 import vista.VentanaLogin;
 import vista.VentanaPrincipalEstudiante;
 import javax.swing.JFrame;
+import java.util.List;
 
+/**
+ * Controlador para la navegación y acciones del menú principal del estudiante.
+ * Gestiona la lógica de cierre de sesión con validación de carga académica.
+ */
 public class ControladorPrincipalEstudiante {
 
-    // --- Atributos ---
     private final SistemaInscripcion sistema;
     private final Estudiante estudiante;
     private VentanaPrincipalEstudiante vista;
 
+    // Referencias globales para permitir el regreso al Login
     private final ControladorEstudiante contEstudianteGlobal;
     private final ControladorAdmin contAdminGlobal;
-
 
     public ControladorPrincipalEstudiante(SistemaInscripcion sistema, Estudiante estudiante,
                                           ControladorEstudiante contEstudianteGlobal, ControladorAdmin contAdminGlobal) {
@@ -26,39 +30,50 @@ public class ControladorPrincipalEstudiante {
         this.contAdminGlobal = contAdminGlobal;
     }
 
-
     public void setVista(VentanaPrincipalEstudiante vista) {
         this.vista = vista;
     }
 
     // --- MANEJADORES DE EVENTOS ---
 
+    public String getNombreEstudiante() {
+        return estudiante.getNombre();
+    }
+
     public void manejarAperturaInscripcion() {
         ControladorInscripcion contInscripcion = new ControladorInscripcion(this.sistema, this.estudiante);
         new VentanaInscripcion(contInscripcion);
     }
 
-
+    /**
+     * Gestiona el proceso de cierre de sesión.
+     * Valida si el estudiante cumple con el requisito de 3 asignaturas inscritas.
+     */
     public void manejarLogout() {
+        // 1. Verificar cantidad de inscripciones
+        List<String> inscritas = estudiante.getAsignaturasInscritas();
+        int cantidad = inscritas.size();
 
-        if (this.vista != null) {
-            this.vista.cerrar(); // Cierra el JFrame del estudiante
+        // 2. Si tiene menos de 3, mostrar advertencia
+        if (cantidad < 3) {
+            String mensaje = "⚠️ ALERTA ACADÉMICA:\n" +
+                    "Actualmente tienes " + cantidad + " asignatura(s) inscrita(s).\n" +
+                    "El requisito académico es inscribir al menos 3 asignaturas.";
+
+            // Preguntar a la vista si el usuario confirma la salida a pesar de la advertencia
+            boolean deseaSalir = vista.mostrarAdvertenciaLogout(mensaje);
+
+            if (!deseaSalir) {
+                return; // Si el usuario dice "No", cancelamos el logout y se queda en la ventana.
+            }
         }
 
-        // CLAVE CORREGIDA: El método global acepta JFrame.
-        // Como VentanaPrincipalEstudiante es un JFrame, el casting ahora es a JFrame y es legal.
-        // Si VentanaPrincipalEstudiante USARA JFrame internamente, debemos obtener esa referencia.
+        // 3. Proceso normal de Logout (Si tiene 3+ materias o si decidió salir igual)
+        if (this.vista != null) {
+            this.vista.cerrar();
+        }
 
-        // Asumiendo que 'vista' tiene un método para obtener la referencia a la ventana,
-        // o que la clase misma extiende JFrame. Dado que la clase NO extiende,
-        // debemos obtener la referencia al JFrame interno (menuEstudiantes).
-
-        // Si la vista no extiende JFrame:
-        // this.contEstudianteGlobal.manejarLogout(this.vista.menuEstudiantes);
-
-        // Pero usaremos la solución más simple que asume que 'cerrar()' ya hizo dispose().
-        // Simplemente llamamos al manejador para que abra la ventana de login:
-
+        // Volver a instanciar el Login
         ControladorLogin contLogin = new ControladorLogin(this.contEstudianteGlobal, this.contAdminGlobal);
         new VentanaLogin(contLogin);
     }
