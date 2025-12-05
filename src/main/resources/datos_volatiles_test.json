@@ -1,0 +1,11 @@
+{
+  "estudiantes": [
+    {
+      "rut": "99.999.999-K",
+      "nombre": "Fantasma Test",
+      "password": "pass",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    }
+  ]
+}

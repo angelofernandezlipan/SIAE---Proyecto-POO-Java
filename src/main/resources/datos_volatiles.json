@@ -1,0 +1,22 @@
+{
+  "estudiantes": [
+    {
+      "rut": "12.345.678-9",
+      "nombre": "nn1",
+      "password": "pass",
+      "curso": "4A",
+      "asignaturasInscritas": [
+        "ART101",
+        "HUM202",
+        "CIE303"
+      ]
+    },
+    {
+      "rut": "98.765.432-1",
+      "nombre": "nn2",
+      "password": "pass",
+      "curso": "4B",
+      "asignaturasInscritas": []
+    }
+  ]
+}
