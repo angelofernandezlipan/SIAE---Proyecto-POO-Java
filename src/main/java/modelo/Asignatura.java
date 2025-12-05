@@ -53,6 +53,10 @@ public class Asignatura {
         return cuposMaximos;
     }
 
+    public void restablecerCupos() {
+        this.cuposDisponibles = this.cuposMaximos;
+    }
+
     @Override
     public String toString() {
         return String.format("Código: %s, Nombre: %s, Sección: %s, Cupos Disponibles: %d/%d",

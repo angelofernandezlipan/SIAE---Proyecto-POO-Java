@@ -5,21 +5,21 @@
       "nombre": "Historia del Arte",
       "seccion": "ARTISTICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 44
+      "cuposDisponibles": 45
     },
     {
       "codigo": "HUM202",
       "nombre": "Filosofia y Etica",
       "seccion": "HUMANISTA",
       "cuposMaximos": 45,
-      "cuposDisponibles": 44
+      "cuposDisponibles": 45
     },
     {
       "codigo": "CIE303",
       "nombre": "Biologia Avanzada",
       "seccion": "MATEMATICO_CIENTIFICO",
       "cuposMaximos": 45,
-      "cuposDisponibles": 44
+      "cuposDisponibles": 45
     },
     {
       "codigo": "ART404",
