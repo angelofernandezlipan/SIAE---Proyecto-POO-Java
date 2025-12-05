@@ -136,11 +136,15 @@ public class SistemaInscripcion {
     public void limpiarDatosSistema() {
         repositorio.limpiarEstudiantes();
         this.estudiantes = new ArrayList<>();
-        // Se mantiene el estado de las asignaturas
-        this.asignaturas = repositorio.cargarAsignaturas().getAsJsonArray("asignaturas") != null ?
-                UtilidadesJSON.jsonArrayToList(repositorio.cargarAsignaturas().getAsJsonArray("asignaturas"), Asignatura.class) :
-                new ArrayList<>();
-        System.out.println("Datos volátiles de estudiantes y de sesión limpiados.");
+
+        if (this.asignaturas != null) {
+            for (Asignatura asig : this.asignaturas) {
+                asig.restablecerCupos();
+            }
+            repositorio.guardarAsignaturas(this.asignaturas);
+        }
+
+        System.out.println("Datos de sistema reiniciados: Estudiantes eliminados y Cupos restaurados.");
     }
 
     // Estos métodos DEBEN ser PUBLIC y estaban bien implementados

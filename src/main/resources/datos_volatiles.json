@@ -1,21 +1,318 @@
 {
   "estudiantes": [
     {
-      "rut": "12.345.678-9",
-      "nombre": "nn1",
-      "password": "pass",
+      "rut": "﻿12.345.671-1",
+      "nombre": "nn01",
+      "password": "pass994",
       "curso": "4A",
-      "asignaturasInscritas": [
-        "ART101",
-        "HUM202",
-        "CIE303"
-      ]
+      "asignaturasInscritas": []
     },
     {
-      "rut": "98.765.432-1",
-      "nombre": "nn2",
-      "password": "pass",
-      "curso": "4B",
+      "rut": "12.345.672-2",
+      "nombre": "nn02",
+      "password": "pass240",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.673-3",
+      "nombre": "nn03",
+      "password": "pass192",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.674-4",
+      "nombre": "nn04",
+      "password": "pass517",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.675-5",
+      "nombre": "nn05",
+      "password": "pass847",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.676-6",
+      "nombre": "nn06",
+      "password": "pass566",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.677-7",
+      "nombre": "nn07",
+      "password": "pass298",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.678-8",
+      "nombre": "nn08",
+      "password": "pass657",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.679-9",
+      "nombre": "nn09",
+      "password": "pass891",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.680-0",
+      "nombre": "nn10",
+      "password": "pass358",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.681-1",
+      "nombre": "nn11",
+      "password": "pass112",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.682-2",
+      "nombre": "nn12",
+      "password": "pass501",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.683-3",
+      "nombre": "nn13",
+      "password": "pass869",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.684-4",
+      "nombre": "nn14",
+      "password": "pass290",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.685-5",
+      "nombre": "nn15",
+      "password": "pass968",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.686-6",
+      "nombre": "nn16",
+      "password": "pass732",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.687-7",
+      "nombre": "nn17",
+      "password": "pass663",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.688-8",
+      "nombre": "nn18",
+      "password": "pass921",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.689-9",
+      "nombre": "nn19",
+      "password": "pass224",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.690-0",
+      "nombre": "nn20",
+      "password": "pass832",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.691-1",
+      "nombre": "nn21",
+      "password": "pass996",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.692-2",
+      "nombre": "nn22",
+      "password": "pass951",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.693-3",
+      "nombre": "nn23",
+      "password": "pass720",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.694-4",
+      "nombre": "nn24",
+      "password": "pass709",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.695-5",
+      "nombre": "nn25",
+      "password": "pass256",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.696-6",
+      "nombre": "nn26",
+      "password": "pass356",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.697-7",
+      "nombre": "nn27",
+      "password": "pass609",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.698-8",
+      "nombre": "nn28",
+      "password": "pass141",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.699-9",
+      "nombre": "nn29",
+      "password": "pass215",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.700-0",
+      "nombre": "nn30",
+      "password": "pass961",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.701-1",
+      "nombre": "nn31",
+      "password": "pass693",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.702-2",
+      "nombre": "nn32",
+      "password": "pass719",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.703-3",
+      "nombre": "nn33",
+      "password": "pass365",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.704-4",
+      "nombre": "nn34",
+      "password": "pass615",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.705-5",
+      "nombre": "nn35",
+      "password": "pass370",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.706-6",
+      "nombre": "nn36",
+      "password": "pass264",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.707-7",
+      "nombre": "nn37",
+      "password": "pass921",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.708-8",
+      "nombre": "nn38",
+      "password": "pass707",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.709-9",
+      "nombre": "nn39",
+      "password": "pass634",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.710-0",
+      "nombre": "nn40",
+      "password": "pass100",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.711-1",
+      "nombre": "nn41",
+      "password": "pass802",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.712-2",
+      "nombre": "nn42",
+      "password": "pass571",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.713-3",
+      "nombre": "nn43",
+      "password": "pass361",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.714-4",
+      "nombre": "nn44",
+      "password": "pass623",
+      "curso": "4A",
+      "asignaturasInscritas": []
+    },
+    {
+      "rut": "12.345.715-5",
+      "nombre": "nn45",
+      "password": "pass744",
+      "curso": "4A",
       "asignaturasInscritas": []
     }
   ]
