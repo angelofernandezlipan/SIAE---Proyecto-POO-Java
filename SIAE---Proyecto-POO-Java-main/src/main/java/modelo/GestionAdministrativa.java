@@ -19,26 +19,14 @@ public class GestionAdministrativa {
 
     public List<String> cargarListaCursos(String filePath) {
         List<String> errores = new ArrayList<>();
-
-        String lowerCasePath = filePath.toLowerCase();
-        if (!lowerCasePath.endsWith(".csv") && !lowerCasePath.endsWith(".txt")) {
-            errores.add("Error: El archivo debe ser un CSV o un TXT.");
-            return errores;
-        }
-
         List<String> lineas = UtilidadesArchivo.leerArchivo(filePath);
-
-        if (lineas == null) {
-            errores.add("Error: No se pudo leer el archivo. Verifique la ruta o los permisos de acceso.");
-            return errores;
-        }
-
-        if (lineas.isEmpty()) {
-            errores.add("Error: El archivo está vacío.");
-            return errores;
-        }
-
         List<String> listaExportar = new ArrayList<>();
+
+        if (lineas == null || lineas.isEmpty()) {
+            errores.add("Error: El archivo está vacío o no existe.");
+            return errores;
+        }
+
         listaExportar.add("RUT\tNOMBRE\tCURSO\tCONTRASEÑA");
 
         for (String linea : lineas) {
