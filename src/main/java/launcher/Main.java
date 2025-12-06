@@ -22,7 +22,7 @@ public class Main {
         contAdmin = new ControladorAdmin(sistema, contEstudiante, null);
 
         ControladorEstudiante contEstudianteGlobal = new ControladorEstudiante(sistema, sesion);
-        ControladorAdmin contAdminGlobal = new ControladorAdmin(sistema, null, null); // Inicialización placeholder
+        ControladorAdmin contAdminGlobal = new ControladorAdmin(sistema, null, null);
 
         contAdminGlobal.setControladoresGlobales(contEstudianteGlobal, contAdminGlobal);
         contEstudianteGlobal.setControladoresGlobales(contEstudianteGlobal, contAdminGlobal);
