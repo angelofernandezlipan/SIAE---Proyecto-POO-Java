@@ -5,9 +5,8 @@ import modelo.Estudiante;
 import modelo.Sesion;
 import modelo.SistemaInscripcion;
 import vista.VentanaLogin;
-import vista.VentanaPrincipal;
 
-import javax.swing.JFrame; // <--- ¡NUEVO IMPORT AÑADIDO!
+import javax.swing.JFrame;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +52,7 @@ public class ControladorEstudiante {
      * Acepta un JFrame (o null) para cerrar la ventana actual, permitiendo
      * pasar tanto VentanaPrincipal como VentanaPrincipalEstudiante.
      */
-    public void manejarLogout(JFrame vistaActual) { // <--- FIRMA CORREGIDA
+    public void manejarLogout(JFrame vistaActual) {
         sesion.cerrarSesion();
 
         if (vistaActual != null) {

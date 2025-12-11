@@ -34,7 +34,7 @@ public class ControladorPrincipalEstudiante {
         this.vista = vista;
     }
 
-    // --- MANEJADORES DE EVENTOS ---
+    // MANEJADORES DE EVENTOS
 
     public String getNombreEstudiante() {
         return estudiante.getNombre();

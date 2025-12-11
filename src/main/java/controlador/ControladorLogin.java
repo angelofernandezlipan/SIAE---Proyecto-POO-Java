@@ -32,7 +32,7 @@ public class ControladorLogin {
                 // 1. Crear el controlador de la ventana principal de estudiante.
                 // Se usa contEstudiante.getSistema() en lugar de contEstudiante.sistema
                 ControladorPrincipalEstudiante contPrincipalEst = new ControladorPrincipalEstudiante(
-                        contEstudiante.getSistema(), // <--- ¡ERROR DE ACCESO RESUELTO!
+                        contEstudiante.getSistema(),
                         estudiante,
                         this.contEstudiante,
                         this.contAdmin

@@ -35,14 +35,12 @@ public class Asignatura {
 
     public void setCuposDisponibles(int nuevosCupos) {this.cuposDisponibles = nuevosCupos;}
 
-    // Nuevo: Méthodo para decrementar cupos de forma controlada
     public void decrementarCupos() {
         if (this.cuposDisponibles > 0) {
             this.cuposDisponibles--;
         }
     }
 
-    // Nuevo: Méthodo para incrementar cupos (si fuera necesario anular una inscripción)
     public void incrementarCupos() {
         if (this.cuposDisponibles < this.cuposMaximos) {
             this.cuposDisponibles++;
